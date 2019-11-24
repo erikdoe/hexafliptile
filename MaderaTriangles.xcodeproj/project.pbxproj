@@ -7,19 +7,73 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		03F526BB238ADC140068DC2C /* MaderaTrianglesView.h in Headers */ = {isa = PBXBuildFile; fileRef = 03F526BA238ADC140068DC2C /* MaderaTrianglesView.h */; };
-		03F526BD238ADC140068DC2C /* MaderaTrianglesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 03F526BC238ADC140068DC2C /* MaderaTrianglesView.m */; };
+		03F526D7238ADC270068DC2C /* ConfigureSheetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F526C5238ADC270068DC2C /* ConfigureSheetController.swift */; };
+		03F526D8238ADC270068DC2C /* ConfigureSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 03F526C6238ADC270068DC2C /* ConfigureSheet.xib */; };
+		03F526D9238ADC270068DC2C /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F526C7238ADC270068DC2C /* Configuration.swift */; };
+		03F526DA238ADC270068DC2C /* Statistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F526C9238ADC270068DC2C /* Statistics.swift */; };
+		03F526DB238ADC270068DC2C /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 03F526CA238ADC270068DC2C /* Shaders.metal */; };
+		03F526DC238ADC270068DC2C /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F526CB238ADC270068DC2C /* Util.swift */; };
+		03F526DD238ADC270068DC2C /* Glyphs.svg in Resources */ = {isa = PBXBuildFile; fileRef = 03F526CC238ADC270068DC2C /* Glyphs.svg */; };
+		03F526DE238ADC270068DC2C /* NSColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F526CD238ADC270068DC2C /* NSColorExtensions.swift */; };
+		03F526DF238ADC270068DC2C /* VectorMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F526CE238ADC270068DC2C /* VectorMath.swift */; };
+		03F526E0238ADC270068DC2C /* MetalScreenSaverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F526CF238ADC270068DC2C /* MetalScreenSaverView.swift */; };
+		03F526E1238ADC270068DC2C /* NSBezierPathExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F526D0238ADC270068DC2C /* NSBezierPathExtensions.swift */; };
+		03F526E2238ADC270068DC2C /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F526D1238ADC270068DC2C /* Renderer.swift */; };
+		03F526E3238ADC270068DC2C /* MaderaTrianglesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F526D3238ADC270068DC2C /* MaderaTrianglesView.swift */; };
+		03F526E4238ADC270068DC2C /* Scene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F526D4238ADC270068DC2C /* Scene.swift */; };
+		03F526E5238ADC270068DC2C /* Sprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F526D5238ADC270068DC2C /* Sprite.swift */; };
+		03F526E6238ADC270068DC2C /* Glyph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F526D6238ADC270068DC2C /* Glyph.swift */; };
+		03F526EE238ADCBF0068DC2C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F526ED238ADCBF0068DC2C /* AppDelegate.swift */; };
+		03F526F0238ADCBF0068DC2C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 03F526EF238ADCBF0068DC2C /* Assets.xcassets */; };
+		03F526F3238ADCBF0068DC2C /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 03F526F1238ADCBF0068DC2C /* MainMenu.xib */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		03F526F9238ADCC90068DC2C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03F526AE238ADC140068DC2C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 03F526B6238ADC140068DC2C;
+			remoteInfo = MaderaTriangles;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		03F526B7238ADC140068DC2C /* MaderaTriangles.saver */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MaderaTriangles.saver; sourceTree = BUILT_PRODUCTS_DIR; };
-		03F526BA238ADC140068DC2C /* MaderaTrianglesView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MaderaTrianglesView.h; sourceTree = "<group>"; };
-		03F526BC238ADC140068DC2C /* MaderaTrianglesView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MaderaTrianglesView.m; sourceTree = "<group>"; };
 		03F526BE238ADC140068DC2C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		03F526C5238ADC270068DC2C /* ConfigureSheetController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigureSheetController.swift; sourceTree = "<group>"; };
+		03F526C6238ADC270068DC2C /* ConfigureSheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ConfigureSheet.xib; sourceTree = "<group>"; };
+		03F526C7238ADC270068DC2C /* Configuration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
+		03F526C9238ADC270068DC2C /* Statistics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Statistics.swift; sourceTree = "<group>"; };
+		03F526CA238ADC270068DC2C /* Shaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
+		03F526CB238ADC270068DC2C /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
+		03F526CC238ADC270068DC2C /* Glyphs.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Glyphs.svg; sourceTree = "<group>"; };
+		03F526CD238ADC270068DC2C /* NSColorExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSColorExtensions.swift; sourceTree = "<group>"; };
+		03F526CE238ADC270068DC2C /* VectorMath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VectorMath.swift; sourceTree = "<group>"; };
+		03F526CF238ADC270068DC2C /* MetalScreenSaverView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetalScreenSaverView.swift; sourceTree = "<group>"; };
+		03F526D0238ADC270068DC2C /* NSBezierPathExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSBezierPathExtensions.swift; sourceTree = "<group>"; };
+		03F526D1238ADC270068DC2C /* Renderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Renderer.swift; sourceTree = "<group>"; };
+		03F526D3238ADC270068DC2C /* MaderaTrianglesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MaderaTrianglesView.swift; sourceTree = "<group>"; };
+		03F526D4238ADC270068DC2C /* Scene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scene.swift; sourceTree = "<group>"; };
+		03F526D5238ADC270068DC2C /* Sprite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sprite.swift; sourceTree = "<group>"; };
+		03F526D6238ADC270068DC2C /* Glyph.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Glyph.swift; sourceTree = "<group>"; };
+		03F526EB238ADCBF0068DC2C /* Runner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Runner.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		03F526ED238ADCBF0068DC2C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		03F526EF238ADCBF0068DC2C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		03F526F2238ADCBF0068DC2C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		03F526F4238ADCBF0068DC2C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		03F526F5238ADCBF0068DC2C /* Runner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Runner.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		03F526B3238ADC140068DC2C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		03F526E8238ADCBF0068DC2C /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -33,6 +87,7 @@
 			isa = PBXGroup;
 			children = (
 				03F526B9238ADC140068DC2C /* MaderaTriangles */,
+				03F526EC238ADCBF0068DC2C /* Runner */,
 				03F526B8238ADC140068DC2C /* Products */,
 			);
 			sourceTree = "<group>";
@@ -41,6 +96,7 @@
 			isa = PBXGroup;
 			children = (
 				03F526B7238ADC140068DC2C /* MaderaTriangles.saver */,
+				03F526EB238ADCBF0068DC2C /* Runner.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -48,11 +104,61 @@
 		03F526B9238ADC140068DC2C /* MaderaTriangles */ = {
 			isa = PBXGroup;
 			children = (
-				03F526BA238ADC140068DC2C /* MaderaTrianglesView.h */,
-				03F526BC238ADC140068DC2C /* MaderaTrianglesView.m */,
+				03F526D2238ADC270068DC2C /* saver */,
+				03F526C4238ADC270068DC2C /* configuration */,
+				03F526C8238ADC270068DC2C /* library */,
 				03F526BE238ADC140068DC2C /* Info.plist */,
 			);
 			path = MaderaTriangles;
+			sourceTree = "<group>";
+		};
+		03F526C4238ADC270068DC2C /* configuration */ = {
+			isa = PBXGroup;
+			children = (
+				03F526C5238ADC270068DC2C /* ConfigureSheetController.swift */,
+				03F526C6238ADC270068DC2C /* ConfigureSheet.xib */,
+				03F526C7238ADC270068DC2C /* Configuration.swift */,
+			);
+			path = configuration;
+			sourceTree = "<group>";
+		};
+		03F526C8238ADC270068DC2C /* library */ = {
+			isa = PBXGroup;
+			children = (
+				03F526C9238ADC270068DC2C /* Statistics.swift */,
+				03F526CA238ADC270068DC2C /* Shaders.metal */,
+				03F526CB238ADC270068DC2C /* Util.swift */,
+				03F526CC238ADC270068DC2C /* Glyphs.svg */,
+				03F526CD238ADC270068DC2C /* NSColorExtensions.swift */,
+				03F526CE238ADC270068DC2C /* VectorMath.swift */,
+				03F526CF238ADC270068DC2C /* MetalScreenSaverView.swift */,
+				03F526D0238ADC270068DC2C /* NSBezierPathExtensions.swift */,
+				03F526D1238ADC270068DC2C /* Renderer.swift */,
+			);
+			path = library;
+			sourceTree = "<group>";
+		};
+		03F526D2238ADC270068DC2C /* saver */ = {
+			isa = PBXGroup;
+			children = (
+				03F526D3238ADC270068DC2C /* MaderaTrianglesView.swift */,
+				03F526D4238ADC270068DC2C /* Scene.swift */,
+				03F526D5238ADC270068DC2C /* Sprite.swift */,
+				03F526D6238ADC270068DC2C /* Glyph.swift */,
+			);
+			path = saver;
+			sourceTree = "<group>";
+		};
+		03F526EC238ADCBF0068DC2C /* Runner */ = {
+			isa = PBXGroup;
+			children = (
+				03F526ED238ADCBF0068DC2C /* AppDelegate.swift */,
+				03F526EF238ADCBF0068DC2C /* Assets.xcassets */,
+				03F526F1238ADCBF0068DC2C /* MainMenu.xib */,
+				03F526F4238ADCBF0068DC2C /* Info.plist */,
+				03F526F5238ADCBF0068DC2C /* Runner.entitlements */,
+			);
+			path = Runner;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -62,7 +168,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				03F526BB238ADC140068DC2C /* MaderaTrianglesView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -87,16 +192,38 @@
 			productReference = 03F526B7238ADC140068DC2C /* MaderaTriangles.saver */;
 			productType = "com.apple.product-type.bundle";
 		};
+		03F526EA238ADCBF0068DC2C /* Runner */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 03F526F6238ADCBF0068DC2C /* Build configuration list for PBXNativeTarget "Runner" */;
+			buildPhases = (
+				03F526E7238ADCBF0068DC2C /* Sources */,
+				03F526E8238ADCBF0068DC2C /* Frameworks */,
+				03F526E9238ADCBF0068DC2C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				03F526FA238ADCC90068DC2C /* PBXTargetDependency */,
+			);
+			name = Runner;
+			productName = Runner;
+			productReference = 03F526EB238ADCBF0068DC2C /* Runner.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		03F526AE238ADC140068DC2C /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 1120;
 				LastUpgradeCheck = 1120;
 				ORGANIZATIONNAME = "Mulle Kybernetik";
 				TargetAttributes = {
 					03F526B6238ADC140068DC2C = {
+						CreatedOnToolsVersion = 11.2.1;
+					};
+					03F526EA238ADCBF0068DC2C = {
 						CreatedOnToolsVersion = 11.2.1;
 					};
 				};
@@ -115,6 +242,7 @@
 			projectRoot = "";
 			targets = (
 				03F526B6238ADC140068DC2C /* MaderaTriangles */,
+				03F526EA238ADCBF0068DC2C /* Runner */,
 			);
 		};
 /* End PBXProject section */
@@ -124,6 +252,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				03F526D8238ADC270068DC2C /* ConfigureSheet.xib in Resources */,
+				03F526DD238ADC270068DC2C /* Glyphs.svg in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		03F526E9238ADCBF0068DC2C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				03F526F0238ADCBF0068DC2C /* Assets.xcassets in Resources */,
+				03F526F3238ADCBF0068DC2C /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -134,11 +273,51 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				03F526BD238ADC140068DC2C /* MaderaTrianglesView.m in Sources */,
+				03F526E3238ADC270068DC2C /* MaderaTrianglesView.swift in Sources */,
+				03F526E1238ADC270068DC2C /* NSBezierPathExtensions.swift in Sources */,
+				03F526DF238ADC270068DC2C /* VectorMath.swift in Sources */,
+				03F526D9238ADC270068DC2C /* Configuration.swift in Sources */,
+				03F526E5238ADC270068DC2C /* Sprite.swift in Sources */,
+				03F526E4238ADC270068DC2C /* Scene.swift in Sources */,
+				03F526DC238ADC270068DC2C /* Util.swift in Sources */,
+				03F526E2238ADC270068DC2C /* Renderer.swift in Sources */,
+				03F526D7238ADC270068DC2C /* ConfigureSheetController.swift in Sources */,
+				03F526DE238ADC270068DC2C /* NSColorExtensions.swift in Sources */,
+				03F526DA238ADC270068DC2C /* Statistics.swift in Sources */,
+				03F526DB238ADC270068DC2C /* Shaders.metal in Sources */,
+				03F526E6238ADC270068DC2C /* Glyph.swift in Sources */,
+				03F526E0238ADC270068DC2C /* MetalScreenSaverView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		03F526E7238ADCBF0068DC2C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				03F526EE238ADCBF0068DC2C /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		03F526FA238ADCC90068DC2C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 03F526B6238ADC140068DC2C /* MaderaTriangles */;
+			targetProxy = 03F526F9238ADCC90068DC2C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		03F526F1238ADCBF0068DC2C /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				03F526F2238ADCBF0068DC2C /* Base */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		03F526BF238ADC140068DC2C /* Debug */ = {
@@ -196,6 +375,7 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -247,6 +427,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -278,6 +459,50 @@
 			};
 			name = Release;
 		};
+		03F526F7238ADCBF0068DC2C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 28U2VZ7DF8;
+				ENABLE_HARDENED_RUNTIME = YES;
+				INFOPLIST_FILE = Runner/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.mulle-kybernetik.Runner";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		03F526F8238ADCBF0068DC2C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 28U2VZ7DF8;
+				ENABLE_HARDENED_RUNTIME = YES;
+				INFOPLIST_FILE = Runner/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.mulle-kybernetik.Runner";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -295,6 +520,15 @@
 			buildConfigurations = (
 				03F526C2238ADC140068DC2C /* Debug */,
 				03F526C3238ADC140068DC2C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		03F526F6238ADCBF0068DC2C /* Build configuration list for PBXNativeTarget "Runner" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				03F526F7238ADCBF0068DC2C /* Debug */,
+				03F526F8238ADCBF0068DC2C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
