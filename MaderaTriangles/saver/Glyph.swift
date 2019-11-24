@@ -32,15 +32,14 @@ class Glyph
         ]
 
         let p = NSBezierPath();
+        p.lineWidth = 3
         p.move(to: NSMakePoint(0, 0))
         p.line(to: NSMakePoint(1, 0))
         p.line(to: NSMakePoint(0.5, CGFloat(sqrt(0.75)))) // 0.5^2 + h^2 = 1^2
         p.close()
-        p.lineWidth = 3
 
         var allGlyphs: [Glyph] = []
         for c in colors {
-//            p.normalize()
             allGlyphs.append(Glyph(path: p, color: c))
         }
         
@@ -53,22 +52,29 @@ class Glyph
         self.color = color
     }
 
+    var aspectRatio: CGFloat
+    {
+        get { path.bounds.width / path.bounds.height }
+    }
+
     func makeBitmap(size: NSSize) -> NSBitmapImageRep
     {
-        let imageRep = NSBitmapImageRep(bitmapDataPlanes: nil, pixelsWide: Int(size.width), pixelsHigh: Int(size.height), bitsPerSample: 8, samplesPerPixel: 4, hasAlpha: true, isPlanar: false, colorSpaceName: NSColorSpaceName.calibratedRGB, bytesPerRow: Int(size.width)*4, bitsPerPixel:32)!
+        let imageRep = NSBitmapImageRep(bitmapDataPlanes: nil, pixelsWide: Int(size.width), pixelsHigh: Int(size.height), bitsPerSample: 8, samplesPerPixel: 4,
+                hasAlpha: true, isPlanar: false, colorSpaceName: NSColorSpaceName.deviceRGB, bytesPerRow: Int(size.width)*4, bitsPerPixel:32)!
 
         NSGraphicsContext.saveGraphicsState()
         NSGraphicsContext.current = NSGraphicsContext(bitmapImageRep: imageRep)
 
-        let safety: CGFloat = 0.06
+        let shrinkFactor: CGFloat = 0.08
         let scaledPath = path.copy() as! NSBezierPath
-        scaledPath.transform(using: AffineTransform(scaleByX: size.width * (1 - 2 * safety), byY: size.height * (1 - 2 * safety)))
-        scaledPath.transform(using: AffineTransform(translationByX: size.width * safety, byY: size.height * safety))
+        // we must scale both dimensions with the same factor, otherwise the shape would get distorted
+        scaledPath.transform(using: AffineTransform(scaleByX: size.width * (1 - 2 * shrinkFactor), byY: size.width * (1 - 2 * shrinkFactor)))
+        // we're moving the triangle down by a tiny amount to account for different rendering of line at bottom and pointy angle at top
+        scaledPath.transform(using: AffineTransform(translationByX: size.width * shrinkFactor, byY: size.width * shrinkFactor - size.height * shrinkFactor * 0.5))
         
         color.set()
         scaledPath.fill()
-
-        Configuration.sharedInstance.outlineColor.set()
+        color.lighter().set()
         scaledPath.stroke()
 
         NSGraphicsContext.restoreGraphicsState()

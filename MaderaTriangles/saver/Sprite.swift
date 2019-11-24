@@ -20,7 +20,7 @@ class Sprite
 {
     let glyphId: Int
     let anchor: Vector2
-    let size: Float
+    let size: NSSize
     let r0: Double
     let r1: Double
     
@@ -29,7 +29,7 @@ class Sprite
     var pos: Vector2
     var rotation: Float
     
-    init(glyphId: Int, anchor: Vector2, size: Float, animation: @escaping (Sprite, Double) -> ())
+    init(glyphId: Int, anchor: Vector2, size: NSSize, rotation: Float, animation: @escaping (Sprite, Double) -> ())
     {
         self.glyphId = glyphId
         self.size = size
@@ -38,7 +38,7 @@ class Sprite
         
         self.anchor = anchor
         self.pos = anchor
-        self.rotation = 0
+        self.rotation = rotation
         
         self.animation = animation
     }
@@ -54,10 +54,10 @@ class Sprite
         {
             let rotationMatrix = Matrix2x2(rotation: rotation)
 
-            let a = (pos + Vector2(-size/2, +size/2) * rotationMatrix)
-            let b = (pos + Vector2(-size/2, -size/2) * rotationMatrix)
-            let c = (pos + Vector2(+size/2, -size/2) * rotationMatrix)
-            let d = (pos + Vector2(+size/2, +size/2) * rotationMatrix)
+            let a = (pos + Vector2(Float(-size.width/2), Float(+size.height/2)) * rotationMatrix)
+            let b = (pos + Vector2(Float(-size.width/2), Float(-size.height/2)) * rotationMatrix)
+            let c = (pos + Vector2(Float(+size.width/2), Float(-size.height/2)) * rotationMatrix)
+            let d = (pos + Vector2(Float(+size.width/2), Float(+size.height/2)) * rotationMatrix)
 
             return (a, b, c, d)
         }

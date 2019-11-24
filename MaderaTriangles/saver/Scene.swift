@@ -19,40 +19,41 @@ import Cocoa
 
 enum ScaleMode: Int {
     case        // the scene is rendered as a square
-        fit,    // scale so that the square fits in the screen rectangle
-        fill    // scale so that the square fills the entire screen rectangle
+         fit,   // - scale so that the square fits in the screen rectangle
+         fill   // - scale so that the square fills the entire screen rectangle
 }
 
-public class Scene
-{
-    var scaleMode: ScaleMode
-    {
-        get
-        {
-            return .fill
+public class Scene {
+    var scaleMode: ScaleMode {
+        get {
+            .fill
         }
     }
 
-    func makeSprites(_ numSprites: Int, glyphs: [Glyph], size maximumSize: Double) -> [Sprite]
-    {
-        let bands = 5;
+    func makeSprites(glyphs: [Glyph], height: Double) -> [Sprite] {
+        // all glyphs have the same ratio, sqrt(0.75) in fact
+        let aspectRatio = glyphs[0].aspectRatio;
+        let size = NSMakeSize(CGFloat(height) * aspectRatio, CGFloat(height))
+        let xstep = height * Double(aspectRatio)
+        let ystep = height
 
         var list: [Sprite] = []
-        let xstep = 1 / Double(numSprites) * Double(bands) + 0.0002
-        let ystep = maximumSize * 1.1
-        let ybase = (1 - ((Double(bands) - 1) * ystep)) / 2
-        for i in 0..<numSprites {
-            let pos = Vector2(Float(xstep * Double(i / bands)) - 0.0001, Float(ybase + ystep * Double(i % bands)))
-            let size = Float(maximumSize)
-            let sprite = Sprite(glyphId: Util.randomInt(glyphs.count), anchor: pos, size: size, animation: Scene.move)
-            list.append(sprite)
+        for yi in 0..<Int(1 / ystep) * 2 {
+            let yp = Double(yi / 2) * ystep
+            let p = Util.gaussian(yp * 4, mean: 4 / 2, variance: 0.11)
+            for xi in 0..<Int(1 / xstep) + 2 {
+                if Util.randomDouble() < (p * 0.9) {
+                    let xp = (Double(xi) + (((yi + 1) % 4) > 1 ? 0.5 : 0.0)) * xstep
+                    let pos = Vector2(Float(xp), Float(yp))
+                    let rot = Float(yi % 2) * Float.pi
+                    list.append(Sprite(glyphId: Util.randomInt(glyphs.count), anchor: pos, size: size, rotation: rot, animation: Scene.move))
+                }
+            }
         }
         return list
     }
 
-    static func move(sprite s: Sprite, to now: Double)
-    {
-        s.rotation = Float(now * 0.6 + Double(s.pos.x) * 8 - Double(s.pos.y) * 4)
+    static func move(sprite s: Sprite, to now: Double) {
     }
 
 }

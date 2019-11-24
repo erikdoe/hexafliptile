@@ -20,9 +20,7 @@ class Configuration
 {
     static let sharedInstance = Configuration()
 
-    let numSprites = 700
-    let glyphSize = 0.08
-    let outlineColor = NSColor(webcolor: "#CCCCCC")
+    let glyphSize = 0.05
     let backgroundColor = NSColor(webcolor: "#000000")
 
 

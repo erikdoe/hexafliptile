@@ -22,7 +22,7 @@ class MaderaTrianglesView: MetalScreenSaverView
 {
     var glyphs: [Glyph]!
 
-    var wave: Scene!
+    var scene: Scene!
     var sprites: [Sprite]!
 
     var renderer: Renderer!
@@ -67,22 +67,12 @@ class MaderaTrianglesView: MetalScreenSaverView
     {
         let configuration = Configuration.sharedInstance
 
-        renderer = Renderer(device: device, numTextures: glyphs.count, numQuads: configuration.numSprites)
+        scene = configuration.wave
+        updateSprites(glyphSize: configuration.glyphSize)
+
+        renderer = Renderer(device: device, numTextures: glyphs.count, numQuads: sprites.count)
         renderer.backgroundColor = configuration.backgroundColor.toMTLClearColor()
-
-        wave = configuration.wave
-
         updateSizeAndTextures(glyphSize: configuration.glyphSize)
-
-        var maxSpriteSize = configuration.glyphSize
-        // size is given as fraction of smaller screen dimension; must compensate for scaling up that happens with fill scale mode
-        if configuration.wave.scaleMode == .fill {
-            maxSpriteSize *= Double(min(bounds.size.width, bounds.size.height) / max(bounds.size.width, bounds.size.height))
-        }
-
-        let list = configuration.wave.makeSprites(configuration.numSprites, glyphs: glyphs, size: maxSpriteSize)
-        // the list should be sorted by glyph to help the renderer optimise draw calls
-        sprites = list.sorted(by: { $0.glyphId > $1.glyphId })
 
         statistics = Statistics()
 
@@ -94,22 +84,33 @@ class MaderaTrianglesView: MetalScreenSaverView
         super.stopAnimation()
 
         renderer = nil
-        wave = nil
+        scene = nil
         sprites = nil
         statistics = nil
     }
 
+
+    private func updateSprites(glyphSize: Double) {
+        var spriteSize = glyphSize
+        // size is given as fraction of smaller screen dimension; must compensate for scaling up that happens with fill scale mode
+        if scene.scaleMode == .fill {
+            spriteSize *= Double(min(bounds.size.width, bounds.size.height) / max(bounds.size.width, bounds.size.height))
+        }
+        let list = scene.makeSprites(glyphs: glyphs, height: spriteSize)
+        // the list should be sorted by glyph to help the renderer optimise draw calls
+        sprites = list.sorted(by: { $0.glyphId > $1.glyphId })
+    }
+
     private func updateSizeAndTextures(glyphSize: Double)
     {
-        let factor = wave.scaleMode == .fit ? min(bounds.size.width, bounds.size.height) : max(bounds.size.width, bounds.size.height)
+        let factor = scene.scaleMode == .fit ? min(bounds.size.width, bounds.size.height) : max(bounds.size.width, bounds.size.height)
         renderer.setOutputSize(NSMakeSize(bounds.size.width / factor, bounds.size.height / factor))
 
-        let screenSize = floor(min(bounds.width, bounds.height) * CGFloat(glyphSize))
-        let scale = (window?.backingScaleFactor)!
-        let bitmapSize = NSMakeSize(screenSize * scale, screenSize * scale)
+        let widthInPixel = floor(min(bounds.width, bounds.height) * CGFloat(glyphSize))
+        let hidpiFactor = (window?.backingScaleFactor)!
 
         for (i, g) in glyphs.enumerated() {
-            let bitmap = g.makeBitmap(size: bitmapSize)
+            let bitmap = g.makeBitmap(size: NSMakeSize(widthInPixel * hidpiFactor, widthInPixel * hidpiFactor / g.aspectRatio))
             renderer.setTexture(image: bitmap, at: i)
         }
     }
@@ -138,7 +139,7 @@ class MaderaTrianglesView: MetalScreenSaverView
     {
         renderer.beginUpdatingQuads()
 
-        let factor = wave.scaleMode == .fit ? min(bounds.size.width, bounds.size.height) : max(bounds.size.width, bounds.size.height)
+        let factor = scene.scaleMode == .fit ? min(bounds.size.width, bounds.size.height) : max(bounds.size.width, bounds.size.height)
         let offset = Vector2(Float((bounds.size.width/factor - 1) / 2), Float((bounds.size.height/factor - 1) / 2))
 
         for i in 0..<sprites.count {

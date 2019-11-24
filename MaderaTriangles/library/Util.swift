@@ -28,6 +28,10 @@ class Util
         return Double(randomInt(max * 100_000)) / Double(100_000)
     }
 
+    class func gaussian(_ x: Double, mean: Double, variance: Double) -> Double {
+        (1.0 / sqrt( 2 * Double.pi * variance)) * pow(M_E, -1 * pow(x - mean, 2.0) / (2 * variance))
+    }
+
     class func sizeofArray<T>(_ array: [T]) -> Int
     {
         return array.count * MemoryLayout<T>.size
