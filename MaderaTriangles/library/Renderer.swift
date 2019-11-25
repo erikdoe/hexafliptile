@@ -69,9 +69,9 @@ class Renderer
         a.isBlendingEnabled = true
         a.rgbBlendOperation = .add
         a.alphaBlendOperation = .add
-        a.sourceRGBBlendFactor = .one
+        a.sourceRGBBlendFactor = .sourceAlpha
         a.sourceAlphaBlendFactor = .one
-        a.destinationRGBBlendFactor = .one
+        a.destinationRGBBlendFactor = .oneMinusSourceAlpha
         a.destinationAlphaBlendFactor = .one
 
         return try! device.makeRenderPipelineState(descriptor: pipelineStateDescriptor)
