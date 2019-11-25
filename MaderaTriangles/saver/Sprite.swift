@@ -18,34 +18,23 @@ import Cocoa
 
 class Sprite
 {
-    let glyphId: Int
-    let anchor: Vector2
     let size: NSSize
     let r0: Double
-    let r1: Double
-    
-    let animation: (Sprite, Double) -> ()
 
+    var glyphId: Int
     var pos: Vector2
     var rotation: Float
-    
-    init(glyphId: Int, anchor: Vector2, size: NSSize, rotation: Float, animation: @escaping (Sprite, Double) -> ())
+    var zRotation: CGFloat
+
+    init(glyphId: Int, anchor: Vector2, size: NSSize, rotation: Float)
     {
         self.glyphId = glyphId
         self.size = size
         self.r0 = Util.randomDouble()
-        self.r1 = Util.randomDouble()
-        
-        self.anchor = anchor
+
         self.pos = anchor
         self.rotation = rotation
-        
-        self.animation = animation
-    }
-    
-    func move(to now: Double)
-    {
-        animation(self, now)
+        self.zRotation = 0
     }
 
     var corners: (Vector2, Vector2, Vector2, Vector2)
@@ -54,14 +43,14 @@ class Sprite
         {
             let rotationMatrix = Matrix2x2(rotation: rotation)
 
-            let a = (pos + Vector2(Float(-size.width/2), Float(+size.height/2)) * rotationMatrix)
-            let b = (pos + Vector2(Float(-size.width/2), Float(-size.height/2)) * rotationMatrix)
-            let c = (pos + Vector2(Float(+size.width/2), Float(-size.height/2)) * rotationMatrix)
-            let d = (pos + Vector2(Float(+size.width/2), Float(+size.height/2)) * rotationMatrix)
+            let a = (pos + Vector2(Float(size.width * zRotation), Float(+size.height/2)) * rotationMatrix)
+            let b = (pos + Vector2(Float(size.width * zRotation), Float(-size.height/2)) * rotationMatrix)
+            let c = (pos + Vector2(Float(-size.width * zRotation), Float(-size.height/2)) * rotationMatrix)
+            let d = (pos + Vector2(Float(-size.width * zRotation), Float(+size.height/2)) * rotationMatrix)
 
             return (a, b, c, d)
         }
     }
-    
+
 
 }

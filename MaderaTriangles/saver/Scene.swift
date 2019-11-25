@@ -24,6 +24,9 @@ enum ScaleMode: Int {
 }
 
 public class Scene {
+
+    var sprites: [Sprite] = []
+
     var scaleMode: ScaleMode {
         get {
             .fill
@@ -42,18 +45,31 @@ public class Scene {
             let yp = Double(yi / 2) * ystep
             let p = Util.gaussian(yp * 4, mean: 4 / 2, variance: 0.11)
             for xi in 0..<Int(1 / xstep) + 2 {
-                if Util.randomDouble() < (p * 0.9) {
+                if Util.randomDouble() < p {
                     let xp = (Double(xi) + (((yi + 1) % 4) > 1 ? 0.5 : 0.0)) * xstep
                     let pos = Vector2(Float(xp), Float(yp))
                     let rot = Float(yi % 2) * Float.pi
-                    list.append(Sprite(glyphId: Util.randomInt(glyphs.count), anchor: pos, size: size, rotation: rot, animation: Scene.move))
+                    list.append(Sprite(glyphId: Util.randomInt(glyphs.count), anchor: pos, size: size, rotation: rot))
                 }
             }
         }
+        sprites = list
+        NSLog("Scene contains \(sprites.count) sprites")
         return list
     }
 
+    func moveSprites(to now: Double) {
+        for i in 0..<sprites.count { // using a plain loop for performance reasons
+            Scene.move(sprite: sprites[i], to: now)
+        }
+    }
+
     static func move(sprite s: Sprite, to now: Double) {
+        let newRotation = CGFloat((1 * now + 10).remainder(dividingBy: 1))
+        if (newRotation.sign != s.zRotation.sign) && (newRotation < 0.1) && (newRotation > -0.1) {
+            s.glyphId = Util.randomInt(6)
+        }
+        s.zRotation = newRotation
     }
 
 }

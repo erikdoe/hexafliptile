@@ -24,6 +24,7 @@ class Glyph
     class func makeAllGlyphs() -> [Glyph]
     {
         let colors = [
+            NSColor(webcolor: "#000000"),
             NSColor(webcolor: "#c85c6c"),
             NSColor(webcolor: "#fe7567"),
             NSColor(webcolor: "#fcc96c"),
@@ -76,6 +77,26 @@ class Glyph
         scaledPath.fill()
         color.lighter().set()
         scaledPath.stroke()
+
+//        var p = NSBezierPath()
+//        p.move(to: NSMakePoint(0, 0))
+//        p.line(to: NSMakePoint(0, 1))
+//        p.line(to: NSMakePoint(1, 1))
+//        p.close()
+//        p.lineWidth = 5
+//        p.transform(using: AffineTransform(scaleByX: size.width, byY: size.width))
+//        NSColor.green.set()
+//        p.stroke()
+//
+//        p = NSBezierPath()
+//        p.move(to: NSMakePoint(0, 0))
+//        p.line(to: NSMakePoint(1, 1))
+//        p.line(to: NSMakePoint(1, 0))
+//        p.close()
+//        p.lineWidth = 3
+//        p.transform(using: AffineTransform(scaleByX: size.width, byY: size.width))
+//        NSColor.blue.set()
+//        p.stroke()
 
         NSGraphicsContext.restoreGraphicsState()
         

@@ -21,9 +21,7 @@ import ScreenSaver
 class MaderaTrianglesView: MetalScreenSaverView
 {
     var glyphs: [Glyph]!
-
     var scene: Scene!
-    var sprites: [Sprite]!
 
     var renderer: Renderer!
     var statistics: Statistics!
@@ -33,7 +31,6 @@ class MaderaTrianglesView: MetalScreenSaverView
     {
         super.init(frame: frame, isPreview: isPreview)
         glyphs = Glyph.makeAllGlyphs()
-        sprites = nil
     }
 
     required init?(coder aDecoder: NSCoder)
@@ -70,7 +67,7 @@ class MaderaTrianglesView: MetalScreenSaverView
         scene = configuration.wave
         updateSprites(glyphSize: configuration.glyphSize)
 
-        renderer = Renderer(device: device, numTextures: glyphs.count, numQuads: sprites.count)
+        renderer = Renderer(device: device, numTextures: glyphs.count, numQuads: scene.sprites.count)
         renderer.backgroundColor = configuration.backgroundColor.toMTLClearColor()
         updateSizeAndTextures(glyphSize: configuration.glyphSize)
 
@@ -85,7 +82,6 @@ class MaderaTrianglesView: MetalScreenSaverView
 
         renderer = nil
         scene = nil
-        sprites = nil
         statistics = nil
     }
 
@@ -96,9 +92,7 @@ class MaderaTrianglesView: MetalScreenSaverView
         if scene.scaleMode == .fill {
             spriteSize *= Double(min(bounds.size.width, bounds.size.height) / max(bounds.size.width, bounds.size.height))
         }
-        let list = scene.makeSprites(glyphs: glyphs, height: spriteSize)
-        // the list should be sorted by glyph to help the renderer optimise draw calls
-        sprites = list.sorted(by: { $0.glyphId > $1.glyphId })
+        scene.makeSprites(glyphs: glyphs, height: spriteSize)
     }
 
     private func updateSizeAndTextures(glyphSize: Double)
@@ -120,11 +114,10 @@ class MaderaTrianglesView: MetalScreenSaverView
         autoreleasepool {
             statistics.viewWillStartRenderingFrame()
 
-            for i in 0..<sprites.count { // using a plain loop for performance reasons
-                sprites[i].move(to: outputTime)
-            }
-
-            updateQuadsForSprites()
+            scene.moveSprites(to: outputTime)
+            // the list should be sorted by glyph to help the renderer optimise draw calls
+            let sprites = scene.sprites.sorted(by: { $0.glyphId > $1.glyphId })
+            updateQuadsForSprites(sprites)
 
             let metalLayer = layer as! CAMetalLayer
             if let drawable = metalLayer.nextDrawable() { // TODO: can this really happen?
@@ -135,7 +128,7 @@ class MaderaTrianglesView: MetalScreenSaverView
         }
     }
     
-    private func updateQuadsForSprites()
+    private func updateQuadsForSprites(_ sprites: [Sprite])
     {
         renderer.beginUpdatingQuads()
 
