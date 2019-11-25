@@ -65,7 +65,13 @@ public class Scene {
     }
 
     static func move(sprite s: Sprite, to now: Double) {
-        let newRotation = CGFloat((1 * now + 10).remainder(dividingBy: 1))
+        let a = floor(s.pos.x * 10)
+        let b = floor(Float(now.remainder(dividingBy: 10)) + 5)
+        if a != b {
+            return
+        }
+
+        let newRotation = CGFloat((2 * now).remainder(dividingBy: 1))
         if (newRotation.sign != s.zRotation.sign) && (newRotation < 0.1) && (newRotation > -0.1) {
             s.glyphId = Util.randomInt(6)
         }
