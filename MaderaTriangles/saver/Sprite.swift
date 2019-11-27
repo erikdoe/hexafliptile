@@ -16,6 +16,15 @@
 
 import Cocoa
 
+enum FlipState: Int {
+    case
+         starting,
+         flipping,
+         wobbling,
+         finished
+}
+
+
 class Sprite
 {
     let size: NSSize
@@ -24,7 +33,9 @@ class Sprite
     var pos: Vector2
     var rotation: Float
     var stretchFactor: CGFloat
-
+    var flipState: FlipState
+    var flipStart: Double
+    
     init(glyphId: Int, position: Vector2, size: NSSize, rotation: Float)
     {
         self.size = size
@@ -32,23 +43,10 @@ class Sprite
         self.glyphId = glyphId
         self.pos = position
         self.rotation = rotation
+        
         self.stretchFactor = -0.5
-    }
-    
-    var zRotation: Float
-    {
-        set(value)
-        {
-            let oldStretchFactor = stretchFactor
-            stretchFactor = CGFloat(value / Float.pi) - 0.5
-            if stretchFactor < 0 && oldStretchFactor > 0 {
-                glyphId = Util.randomInt(6)
-            }
-        }
-        get
-        {
-            0.0 // keep compiler happy
-        }
+        self.flipState = .finished
+        self.flipStart = 0
     }
 
     var corners: (Vector2, Vector2, Vector2, Vector2)
@@ -66,12 +64,38 @@ class Sprite
         }
     }
     
+    func flip() {
+        flipState = .starting
+    }
+
     func move(to now: Double) {
+
+        switch flipState {
+        case .starting:
+            flipStart = now
+            flipState = .flipping
+        case .flipping:
+            let d = (now - flipStart) * 3 // TODO: config?
+            if d < 1 {
+                let oldFactor = stretchFactor
+                stretchFactor = CGFloat(d - 0.5)
+                if oldFactor < 0 && stretchFactor > 0 {
+                    glyphId = Util.randomInt(6)
+                }
+            } else {
+                flipState = .wobbling
+            }
+        case .wobbling:
+            let d = (now - flipStart) * 10 + 2 * Double.pi
+            let f = abs(CGFloat(3/(5*d) * sin(d)))
+            stretchFactor = -0.5 + f
+            if f < 0.0001 {
+                flipState = .finished
+            }
+        case .finished:
+            stretchFactor = 0.5
+        }
         
     }
     
-    func flip() {
-        glyphId = Util.randomInt(6)
-    }
-
 }
