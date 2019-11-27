@@ -131,8 +131,7 @@ class MaderaTrianglesView: MetalScreenSaverView
     {
         statistics.viewWillStartRenderingFrame()
 
-         // the list should be sorted by glyph to help the renderer optimise draw calls
-         let sprites = scene.sprites.sorted(by: { $0.glyphId > $1.glyphId })
+         let sprites = scene.sprites //.sorted(by: { $0.glyphId > $1.glyphId })
          updateQuadsForSprites(sprites)
 
          let metalLayer = layer as! CAMetalLayer

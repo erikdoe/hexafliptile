@@ -38,7 +38,7 @@ class Statistics
         framesSinceCheckpoint += 1
 
         if (now - lastCheckpoint) >= 1.0 {
-#if DEBUG
+#if true
             print()
 #endif
             lastCheckpoint = now
