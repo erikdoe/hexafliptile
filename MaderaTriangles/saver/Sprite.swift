@@ -19,22 +19,36 @@ import Cocoa
 class Sprite
 {
     let size: NSSize
-    let r0: Double
 
     var glyphId: Int
     var pos: Vector2
     var rotation: Float
-    var zRotation: CGFloat
+    var stretchFactor: CGFloat
 
     init(glyphId: Int, position: Vector2, size: NSSize, rotation: Float)
     {
         self.size = size
-        self.r0 = Util.randomDouble()
 
         self.glyphId = glyphId
         self.pos = position
         self.rotation = rotation
-        self.zRotation = -0.5
+        self.stretchFactor = -0.5
+    }
+    
+    var zRotation: Float
+    {
+        set(value)
+        {
+            let oldStretchFactor = stretchFactor
+            stretchFactor = CGFloat(value / Float.pi) - 0.5
+            if stretchFactor < 0 && oldStretchFactor > 0 {
+                glyphId = Util.randomInt(6)
+            }
+        }
+        get
+        {
+            0.0 // keep compiler happy
+        }
     }
 
     var corners: (Vector2, Vector2, Vector2, Vector2)
@@ -43,13 +57,21 @@ class Sprite
         {
             let rotationMatrix = Matrix2x2(rotation: rotation)
 
-            let a = pos + Vector2(Float(+size.width * zRotation), Float(+size.height * 0.5)) * rotationMatrix
-            let b = pos + Vector2(Float(+size.width * zRotation), Float(-size.height * 0.5)) * rotationMatrix
-            let c = pos + Vector2(Float(-size.width * zRotation), Float(-size.height * 0.5)) * rotationMatrix
-            let d = pos + Vector2(Float(-size.width * zRotation), Float(+size.height * 0.5)) * rotationMatrix
+            let a = pos + Vector2(Float(+size.width * stretchFactor), Float(+size.height * 0.5)) * rotationMatrix
+            let b = pos + Vector2(Float(+size.width * stretchFactor), Float(-size.height * 0.5)) * rotationMatrix
+            let c = pos + Vector2(Float(-size.width * stretchFactor), Float(-size.height * 0.5)) * rotationMatrix
+            let d = pos + Vector2(Float(-size.width * stretchFactor), Float(+size.height * 0.5)) * rotationMatrix
 
             return (a, b, c, d)
         }
+    }
+    
+    func move(to now: Double) {
+        
+    }
+    
+    func flip() {
+        glyphId = Util.randomInt(6)
     }
 
 }

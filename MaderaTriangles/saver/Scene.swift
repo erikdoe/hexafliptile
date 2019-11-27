@@ -59,16 +59,19 @@ public class Scene {
     }
 
     static func move(sprite s: Sprite, to now: Double) {
-        let a = floor(s.pos.x * 10)
-        let b = floor(Float(now.remainder(dividingBy: 10)) + 5)
-        if a != b {
-            return
+        let t = (now/2).remainder(dividingBy: 1) + 0.5
+        let p = (Double(s.pos.x) + Double(s.pos.y) / 3).remainder(dividingBy: 1) + 0.5
+        let d = t-p
+        if d > 0 && d < 0.5 {
+            s.zRotation = Float((0.5 - d) * 2 * Double.pi)
+        } else {
+            s.zRotation = 0
         }
 
-        let newRotation = CGFloat((2 * now).remainder(dividingBy: 1))
-        if (newRotation.sign != s.zRotation.sign) && (newRotation < 0.1) && (newRotation > -0.1) {
-            s.glyphId = Util.randomInt(6)
-        }
+//        let newRotation = CGFloat((2 * now).remainder(dividingBy: 1))
+//        if (newRotation.sign != s.zRotation.sign) && (newRotation < 0.1) && (newRotation > -0.1) {
+//            s.glyphId = Util.randomInt(6)
+//        }
 //        s.zRotation = newRotation
     }
 
