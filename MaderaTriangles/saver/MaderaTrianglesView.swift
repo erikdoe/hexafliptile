@@ -45,7 +45,7 @@ class MaderaTrianglesView: MetalScreenSaverView
     }
 
 
-    // screen saver api
+    // configuration
 
     override var hasConfigureSheet: Bool
     {
@@ -60,6 +60,8 @@ class MaderaTrianglesView: MetalScreenSaverView
     }
 
 
+    // start and stop
+    
     override func startAnimation()
     {
         let configuration = Configuration.sharedInstance
@@ -109,24 +111,38 @@ class MaderaTrianglesView: MetalScreenSaverView
         }
     }
 
+    
+    // animation
+
     override func animateOneFrame()
     {
-        autoreleasepool {
-            statistics.viewWillStartRenderingFrame()
-
-            scene.moveSprites(to: outputTime)
-            // the list should be sorted by glyph to help the renderer optimise draw calls
-            let sprites = scene.sprites.sorted(by: { $0.glyphId > $1.glyphId })
-            updateQuadsForSprites(sprites)
-
-            let metalLayer = layer as! CAMetalLayer
-            if let drawable = metalLayer.nextDrawable() { // TODO: can this really happen?
-                renderer.renderFrame(drawable: drawable)
-            }
-            
-            statistics.viewDidFinishRenderingFrame()
-        }
+        scene.moveSprites(to: outputTime)
+        drawFrame()
+//        DispatchQueue.main.async() {
+//            self.needsDisplay = true
+//        }
     }
+    
+    override func draw(_ dirtyRect: NSRect) {
+        drawFrame()
+    }
+
+    private func drawFrame()
+    {
+        statistics.viewWillStartRenderingFrame()
+
+         // the list should be sorted by glyph to help the renderer optimise draw calls
+         let sprites = scene.sprites.sorted(by: { $0.glyphId > $1.glyphId })
+         updateQuadsForSprites(sprites)
+
+         let metalLayer = layer as! CAMetalLayer
+         if let drawable = metalLayer.nextDrawable() { // TODO: can this really happen?
+             renderer.renderFrame(drawable: drawable)
+         }
+
+         statistics.viewDidFinishRenderingFrame()
+    }
+    
     
     private func updateQuadsForSprites(_ sprites: [Sprite])
     {
