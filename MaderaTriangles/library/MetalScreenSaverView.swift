@@ -109,11 +109,6 @@ class MetalScreenSaverView : ScreenSaverView
     
     // screen saver api
 
-    override class func backingStoreType() -> NSWindow.BackingStoreType
-    {
-        return NSWindow.BackingStoreType.nonretained
-    }
-
     override func startAnimation()
     {
         // we're not calling super because we need to set up our own timer for the animation
@@ -128,10 +123,7 @@ class MetalScreenSaverView : ScreenSaverView
     
     override var isAnimating: Bool
     {
-        get
-        {
-            return CVDisplayLinkIsRunning(displayLink!)
-        }
+        get { CVDisplayLinkIsRunning(displayLink!) }
     }
 
 

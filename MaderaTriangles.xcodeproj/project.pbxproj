@@ -13,7 +13,6 @@
 		03F526DA238ADC270068DC2C /* Statistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F526C9238ADC270068DC2C /* Statistics.swift */; };
 		03F526DB238ADC270068DC2C /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 03F526CA238ADC270068DC2C /* Shaders.metal */; };
 		03F526DC238ADC270068DC2C /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F526CB238ADC270068DC2C /* Util.swift */; };
-		03F526DD238ADC270068DC2C /* Glyphs.svg in Resources */ = {isa = PBXBuildFile; fileRef = 03F526CC238ADC270068DC2C /* Glyphs.svg */; };
 		03F526DE238ADC270068DC2C /* NSColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F526CD238ADC270068DC2C /* NSColorExtensions.swift */; };
 		03F526DF238ADC270068DC2C /* VectorMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F526CE238ADC270068DC2C /* VectorMath.swift */; };
 		03F526E0238ADC270068DC2C /* MetalScreenSaverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F526CF238ADC270068DC2C /* MetalScreenSaverView.swift */; };
@@ -46,7 +45,6 @@
 		03F526C9238ADC270068DC2C /* Statistics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Statistics.swift; sourceTree = "<group>"; };
 		03F526CA238ADC270068DC2C /* Shaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
 		03F526CB238ADC270068DC2C /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
-		03F526CC238ADC270068DC2C /* Glyphs.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Glyphs.svg; sourceTree = "<group>"; };
 		03F526CD238ADC270068DC2C /* NSColorExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSColorExtensions.swift; sourceTree = "<group>"; };
 		03F526CE238ADC270068DC2C /* VectorMath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VectorMath.swift; sourceTree = "<group>"; };
 		03F526CF238ADC270068DC2C /* MetalScreenSaverView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetalScreenSaverView.swift; sourceTree = "<group>"; };
@@ -123,14 +121,13 @@
 		03F526C8238ADC270068DC2C /* library */ = {
 			isa = PBXGroup;
 			children = (
-				03F526C9238ADC270068DC2C /* Statistics.swift */,
-				03F526CA238ADC270068DC2C /* Shaders.metal */,
-				03F526CB238ADC270068DC2C /* Util.swift */,
-				03F526CC238ADC270068DC2C /* Glyphs.svg */,
-				03F526CD238ADC270068DC2C /* NSColorExtensions.swift */,
-				03F526CE238ADC270068DC2C /* VectorMath.swift */,
 				03F526CF238ADC270068DC2C /* MetalScreenSaverView.swift */,
+				03F526CA238ADC270068DC2C /* Shaders.metal */,
 				03F526D1238ADC270068DC2C /* Renderer.swift */,
+				03F526C9238ADC270068DC2C /* Statistics.swift */,
+				03F526CB238ADC270068DC2C /* Util.swift */,
+				03F526CE238ADC270068DC2C /* VectorMath.swift */,
+				03F526CD238ADC270068DC2C /* NSColorExtensions.swift */,
 			);
 			path = library;
 			sourceTree = "<group>";
@@ -250,7 +247,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				03F526D8238ADC270068DC2C /* ConfigureSheet.xib in Resources */,
-				03F526DD238ADC270068DC2C /* Glyphs.svg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
