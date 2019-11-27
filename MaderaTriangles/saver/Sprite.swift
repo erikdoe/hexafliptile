@@ -26,15 +26,15 @@ class Sprite
     var rotation: Float
     var zRotation: CGFloat
 
-    init(glyphId: Int, anchor: Vector2, size: NSSize, rotation: Float)
+    init(glyphId: Int, position: Vector2, size: NSSize, rotation: Float)
     {
-        self.glyphId = glyphId
         self.size = size
         self.r0 = Util.randomDouble()
 
-        self.pos = anchor
+        self.glyphId = glyphId
+        self.pos = position
         self.rotation = rotation
-        self.zRotation = 0
+        self.zRotation = -0.5
     }
 
     var corners: (Vector2, Vector2, Vector2, Vector2)
@@ -43,14 +43,13 @@ class Sprite
         {
             let rotationMatrix = Matrix2x2(rotation: rotation)
 
-            let a = (pos + Vector2(Float(size.width * zRotation), Float(+size.height/2)) * rotationMatrix)
-            let b = (pos + Vector2(Float(size.width * zRotation), Float(-size.height/2)) * rotationMatrix)
-            let c = (pos + Vector2(Float(-size.width * zRotation), Float(-size.height/2)) * rotationMatrix)
-            let d = (pos + Vector2(Float(-size.width * zRotation), Float(+size.height/2)) * rotationMatrix)
+            let a = pos + Vector2(Float(+size.width * zRotation), Float(+size.height * 0.5)) * rotationMatrix
+            let b = pos + Vector2(Float(+size.width * zRotation), Float(-size.height * 0.5)) * rotationMatrix
+            let c = pos + Vector2(Float(-size.width * zRotation), Float(-size.height * 0.5)) * rotationMatrix
+            let d = pos + Vector2(Float(-size.width * zRotation), Float(+size.height * 0.5)) * rotationMatrix
 
             return (a, b, c, d)
         }
     }
-
 
 }

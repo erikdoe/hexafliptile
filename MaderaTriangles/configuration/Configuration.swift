@@ -21,8 +21,14 @@ class Configuration
     static let sharedInstance = Configuration()
 
     let glyphSize = 0.05
-    let backgroundColor = NSColor(webcolor: "#333333")
-
+    let backgroundColor = NSColor(webcolor: "#AAAAAA")
+    let colors = [
+        NSColor(webcolor: "#c85c6c"),
+        NSColor(webcolor: "#fe7567"),
+        NSColor(webcolor: "#fcc96c"),
+        NSColor(webcolor: "#548ecb"),
+        NSColor(webcolor: "#315b8b")
+    ]
 
     var defaults: UserDefaults
 
@@ -42,13 +48,5 @@ class Configuration
     }
 
     
-    var wave: Scene
-    {
-        get
-        {
-            return Scene()
-        }
-    }
-
 }
 

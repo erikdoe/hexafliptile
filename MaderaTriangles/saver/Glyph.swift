@@ -19,35 +19,32 @@ import Cocoa
 class Glyph
 {
     private let path: NSBezierPath
-    private let color: NSColor
+    private let color: NSColor?
 
+    
     class func makeAllGlyphs() -> [Glyph]
     {
-        let colors = [
-            NSColor(webcolor: "#000000"),
-            NSColor(webcolor: "#c85c6c"),
-            NSColor(webcolor: "#fe7567"),
-            NSColor(webcolor: "#fcc96c"),
-            NSColor(webcolor: "#548ecb"),
-            NSColor(webcolor: "#315b8b")
-        ]
-
+        var allGlyphs: [Glyph] = []
+        let triangle = Glyph.makeTrianglePath()
+        for c in Configuration.sharedInstance.colors {
+            allGlyphs.append(Glyph(path: triangle, color: c))
+        }
+        allGlyphs.append(Glyph(path: triangle, color: nil)) // TODO: config?
+        return allGlyphs
+    }
+    
+    private static func makeTrianglePath() -> NSBezierPath {
         let p = NSBezierPath();
-        p.lineWidth = 3
+        p.lineWidth = 4 // TODO: config?
         p.move(to: NSMakePoint(0, 0))
         p.line(to: NSMakePoint(1, 0))
         p.line(to: NSMakePoint(0.5, CGFloat(sqrt(0.75)))) // 0.5^2 + h^2 = 1^2
         p.close()
-
-        var allGlyphs: [Glyph] = []
-        for c in colors {
-            allGlyphs.append(Glyph(path: p, color: c))
-        }
-        
-        return allGlyphs
+        return p
     }
     
-    init(path: NSBezierPath, color: NSColor)
+    
+    init(path: NSBezierPath, color: NSColor?)
     {
         self.path = path
         self.color = color
@@ -60,23 +57,26 @@ class Glyph
 
     func makeBitmap(size: NSSize) -> NSBitmapImageRep
     {
-        let imageRep = NSBitmapImageRep(bitmapDataPlanes: nil, pixelsWide: Int(size.width), pixelsHigh: Int(size.height), bitsPerSample: 8, samplesPerPixel: 4,
-                hasAlpha: true, isPlanar: false, colorSpaceName: NSColorSpaceName.deviceRGB, bytesPerRow: Int(size.width)*4, bitsPerPixel:32)!
+        let imageRep = NSBitmapImageRep(bitmapDataPlanes: nil, pixelsWide: Int(size.width), pixelsHigh: Int(size.height), bitsPerSample: 8,
+                                        samplesPerPixel: 4, hasAlpha: true, isPlanar: false, colorSpaceName: NSColorSpaceName.deviceRGB,
+                                        bytesPerRow: Int(size.width)*4, bitsPerPixel:32)!
 
         NSGraphicsContext.saveGraphicsState()
         NSGraphicsContext.current = NSGraphicsContext(bitmapImageRep: imageRep)
 
-        let shrinkFactor: CGFloat = 0.08
+        let shrinkFactor: CGFloat = 0.08 // TODO: config?
         let scaledPath = path.copy() as! NSBezierPath
         // we must scale both dimensions with the same factor, otherwise the shape would get distorted
         scaledPath.transform(using: AffineTransform(scaleByX: size.width * (1 - 2 * shrinkFactor), byY: size.width * (1 - 2 * shrinkFactor)))
         // we're moving the triangle down by a tiny amount to account for different rendering of line at bottom and pointy angle at top
         scaledPath.transform(using: AffineTransform(translationByX: size.width * shrinkFactor, byY: size.width * shrinkFactor - size.height * shrinkFactor * 0.5))
         
-        color.set()
-        scaledPath.fill()
-        color.lighter().set()
-        scaledPath.stroke()
+        if let color = color {
+            color.set()
+            scaledPath.fill()
+            color.lighter().set()
+            scaledPath.stroke()
+        }
 
 //        var p = NSBezierPath()
 //        p.move(to: NSMakePoint(0, 0))

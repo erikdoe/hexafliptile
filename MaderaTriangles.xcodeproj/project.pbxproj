@@ -17,7 +17,6 @@
 		03F526DE238ADC270068DC2C /* NSColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F526CD238ADC270068DC2C /* NSColorExtensions.swift */; };
 		03F526DF238ADC270068DC2C /* VectorMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F526CE238ADC270068DC2C /* VectorMath.swift */; };
 		03F526E0238ADC270068DC2C /* MetalScreenSaverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F526CF238ADC270068DC2C /* MetalScreenSaverView.swift */; };
-		03F526E1238ADC270068DC2C /* NSBezierPathExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F526D0238ADC270068DC2C /* NSBezierPathExtensions.swift */; };
 		03F526E2238ADC270068DC2C /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F526D1238ADC270068DC2C /* Renderer.swift */; };
 		03F526E3238ADC270068DC2C /* MaderaTrianglesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F526D3238ADC270068DC2C /* MaderaTrianglesView.swift */; };
 		03F526E4238ADC270068DC2C /* Scene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F526D4238ADC270068DC2C /* Scene.swift */; };
@@ -51,7 +50,6 @@
 		03F526CD238ADC270068DC2C /* NSColorExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSColorExtensions.swift; sourceTree = "<group>"; };
 		03F526CE238ADC270068DC2C /* VectorMath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VectorMath.swift; sourceTree = "<group>"; };
 		03F526CF238ADC270068DC2C /* MetalScreenSaverView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetalScreenSaverView.swift; sourceTree = "<group>"; };
-		03F526D0238ADC270068DC2C /* NSBezierPathExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSBezierPathExtensions.swift; sourceTree = "<group>"; };
 		03F526D1238ADC270068DC2C /* Renderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Renderer.swift; sourceTree = "<group>"; };
 		03F526D3238ADC270068DC2C /* MaderaTrianglesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MaderaTrianglesView.swift; sourceTree = "<group>"; };
 		03F526D4238ADC270068DC2C /* Scene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scene.swift; sourceTree = "<group>"; };
@@ -132,7 +130,6 @@
 				03F526CD238ADC270068DC2C /* NSColorExtensions.swift */,
 				03F526CE238ADC270068DC2C /* VectorMath.swift */,
 				03F526CF238ADC270068DC2C /* MetalScreenSaverView.swift */,
-				03F526D0238ADC270068DC2C /* NSBezierPathExtensions.swift */,
 				03F526D1238ADC270068DC2C /* Renderer.swift */,
 			);
 			path = library;
@@ -274,7 +271,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				03F526E3238ADC270068DC2C /* MaderaTrianglesView.swift in Sources */,
-				03F526E1238ADC270068DC2C /* NSBezierPathExtensions.swift in Sources */,
 				03F526DF238ADC270068DC2C /* VectorMath.swift in Sources */,
 				03F526D9238ADC270068DC2C /* Configuration.swift in Sources */,
 				03F526E5238ADC270068DC2C /* Sprite.swift in Sources */,

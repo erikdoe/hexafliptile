@@ -27,14 +27,14 @@ extension NSColor
         self.init(red: CGFloat(red/256), green: CGFloat(green/256), blue: CGFloat(blue/256), alpha: 1)
     }
 
-    func lighter(_ amount :CGFloat = 0.25) -> NSColor
+    func lighter(_ amount :CGFloat = 0.15) -> NSColor
     {
-        hueColorWithBrightnessAmount(1 + amount)
+        hueColorWithBrightnessAmount(amount)
     }
 
-    func darker(_ amount :CGFloat = 0.25) -> NSColor
+    func darker(_ amount :CGFloat = 0.15) -> NSColor
     {
-        hueColorWithBrightnessAmount(1 - amount)
+        hueColorWithBrightnessAmount(-amount)
     }
 
     fileprivate func hueColorWithBrightnessAmount(_ amount: CGFloat) -> NSColor
@@ -44,7 +44,7 @@ extension NSColor
         var brightness: CGFloat = 0
         var alpha: CGFloat = 0
         getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha)
-        return NSColor(hue: hue, saturation: saturation, brightness: brightness*amount, alpha: alpha)
+        return NSColor(hue: hue, saturation: saturation, brightness: brightness+amount, alpha: alpha)
     }
 
     func toMTLClearColor() -> MTLClearColor

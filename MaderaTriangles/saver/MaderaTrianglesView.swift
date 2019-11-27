@@ -64,7 +64,7 @@ class MaderaTrianglesView: MetalScreenSaverView
     {
         let configuration = Configuration.sharedInstance
 
-        scene = configuration.wave
+        scene = Scene()
         updateSprites(glyphSize: configuration.glyphSize)
 
         renderer = Renderer(device: device, numTextures: glyphs.count, numQuads: scene.sprites.count)
