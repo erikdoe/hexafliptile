@@ -83,7 +83,7 @@ class Sprite
                     glyphId = Util.randomInt(6) // TODO: this needs to be glyphs.count
                 }
             } else {
-                flipState = .wobbling
+                flipState = .finished
             }
         case .wobbling:
             let d = (now - flipStart) + Double.pi - 1

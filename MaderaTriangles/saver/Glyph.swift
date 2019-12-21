@@ -34,7 +34,7 @@ class Glyph
     
     private static func makeTrianglePath() -> NSBezierPath {
         let p = NSBezierPath();
-        p.lineWidth = 4 // TODO: config?
+        p.lineWidth = 3 // TODO: config?
         p.move(to: NSMakePoint(0, 0))
         p.line(to: NSMakePoint(1, 0))
         p.line(to: NSMakePoint(0.5, CGFloat(sqrt(0.75)))) // 0.5^2 + h^2 = 1^2
@@ -69,7 +69,7 @@ class Glyph
         scaledPath.transform(using: AffineTransform(scaleByX: size.width * (1 - shrinkFactor), byY: size.width * (1 - shrinkFactor)))
         scaledPath.transform(using: AffineTransform(translationByX: size.width * shrinkFactor/2, byY: size.width * shrinkFactor/2))
         // we're moving the triangle down by a tiny amount to account for different rendering of line at bottom and pointy angle at top
-        scaledPath.transform(using: AffineTransform(translationByX: 0, byY: -0.04 * size.height))
+        scaledPath.transform(using: AffineTransform(translationByX: 0, byY: -0.03 * size.height))
 
         if let color = color {
             color.set()

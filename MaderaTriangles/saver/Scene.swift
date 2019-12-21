@@ -17,15 +17,8 @@
 import Cocoa
 
 
-enum ScaleMode: Int {
-    case        // the scene is rendered as a square
-         fit,   // - scale so that the square fits in the screen rectangle
-         fill   // - scale so that the square fills the entire screen rectangle
-}
-
 public class Scene {
 
-    let scaleMode: ScaleMode = .fill
     var sprites: [Sprite] = []
 
     func makeSprites(glyphs: [Glyph], height: Double) {
