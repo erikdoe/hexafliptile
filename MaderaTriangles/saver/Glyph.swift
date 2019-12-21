@@ -21,7 +21,6 @@ class Glyph
     private let path: NSBezierPath
     private let color: NSColor?
 
-    
     class func makeAllGlyphs() -> [Glyph]
     {
         var allGlyphs: [Glyph] = []
@@ -64,13 +63,14 @@ class Glyph
         NSGraphicsContext.saveGraphicsState()
         NSGraphicsContext.current = NSGraphicsContext(bitmapImageRep: imageRep)
 
-        let shrinkFactor: CGFloat = 0.08 // TODO: config?
+        let shrinkFactor: CGFloat = 0.16 // TODO: config?
         let scaledPath = path.copy() as! NSBezierPath
         // we must scale both dimensions with the same factor, otherwise the shape would get distorted
-        scaledPath.transform(using: AffineTransform(scaleByX: size.width * (1 - 2 * shrinkFactor), byY: size.width * (1 - 2 * shrinkFactor)))
+        scaledPath.transform(using: AffineTransform(scaleByX: size.width * (1 - shrinkFactor), byY: size.width * (1 - shrinkFactor)))
+        scaledPath.transform(using: AffineTransform(translationByX: size.width * shrinkFactor/2, byY: size.width * shrinkFactor/2))
         // we're moving the triangle down by a tiny amount to account for different rendering of line at bottom and pointy angle at top
-        scaledPath.transform(using: AffineTransform(translationByX: size.width * shrinkFactor, byY: size.width * shrinkFactor - size.height * shrinkFactor * 0.5))
-        
+        scaledPath.transform(using: AffineTransform(translationByX: 0, byY: -0.04 * size.height))
+
         if let color = color {
             color.set()
             scaledPath.fill()

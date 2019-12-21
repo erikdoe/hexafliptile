@@ -99,11 +99,11 @@ class MaderaTrianglesView: MetalScreenSaverView
 
     private func updateSizeAndTextures(glyphSize: Double)
     {
-        let factor = scene.scaleMode == .fit ? min(bounds.size.width, bounds.size.height) : max(bounds.size.width, bounds.size.height)
-        renderer.setOutputSize(NSMakeSize(bounds.size.width / factor, bounds.size.height / factor))
+        let divisor = scene.scaleMode == .fit ? min(bounds.size.width, bounds.size.height) : max(bounds.size.width, bounds.size.height)
+        renderer.setOutputSize(NSMakeSize(bounds.size.width / divisor, bounds.size.height / divisor))
 
         let widthInPixel = floor(min(bounds.width, bounds.height) * CGFloat(glyphSize))
-        let hidpiFactor = (window?.backingScaleFactor)!
+        let hidpiFactor = (window!.backingScaleFactor)
 
         for (i, g) in glyphs.enumerated() {
             let bitmap = g.makeBitmap(size: NSMakeSize(widthInPixel * hidpiFactor, widthInPixel * hidpiFactor / g.aspectRatio))
@@ -147,8 +147,8 @@ class MaderaTrianglesView: MetalScreenSaverView
     {
         renderer.beginUpdatingQuads()
 
-        let factor = scene.scaleMode == .fit ? min(bounds.size.width, bounds.size.height) : max(bounds.size.width, bounds.size.height)
-        let offset = Vector2(Float((bounds.size.width/factor - 1) / 2), Float((bounds.size.height/factor - 1) / 2))
+        let divisor = scene.scaleMode == .fit ? min(bounds.size.width, bounds.size.height) : max(bounds.size.width, bounds.size.height)
+        let offset = Vector2(Float((bounds.size.width/divisor - 1) / 2), Float((bounds.size.height/divisor - 1) / 2))
 
         for i in 0..<sprites.count {
             let (a, b, c, d) = sprites[i].corners
@@ -159,6 +159,4 @@ class MaderaTrianglesView: MetalScreenSaverView
     }
 
 }
-
-
 

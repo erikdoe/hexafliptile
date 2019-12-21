@@ -52,6 +52,7 @@ class MetalScreenSaverView : ScreenSaverView
         } else {
             for d in MTLCopyAllDevices() {
                 device = d
+                NSLog("Considering device '\(d.name)'")
                 if d.isLowPower && !d.isHeadless {
                     break
                 }

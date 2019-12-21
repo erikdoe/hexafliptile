@@ -59,8 +59,8 @@ public class Scene {
     }
 
     static func move(sprite s: Sprite, to now: Double) {
-        let interval = 4.0 // TODO: config?
-        let t = (now*1/3).remainder(dividingBy: interval) + interval/2
+        let interval = 2.0 // TODO: config?
+        let t = (now*1/2).remainder(dividingBy: interval) + interval/2
         let p = 1 - sqrt(1 - Double(s.pos.x)) + Double(s.pos.y) / 3
         let d = t-p
         if (d > 0 && d < 0.01) && (Util.randomDouble() < 0.3) { // TODO: config?

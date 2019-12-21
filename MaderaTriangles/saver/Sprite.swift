@@ -80,7 +80,7 @@ class Sprite
                 let oldFactor = stretchFactor
                 stretchFactor = CGFloat(d - 0.5)
                 if oldFactor < 0 && stretchFactor > 0 {
-                    glyphId = Util.randomInt(6)
+                    glyphId = Util.randomInt(6) // TODO: this needs to be glyphs.count
                 }
             } else {
                 flipState = .wobbling
