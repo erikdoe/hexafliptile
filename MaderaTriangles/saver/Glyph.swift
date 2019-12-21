@@ -19,7 +19,7 @@ import Cocoa
 class Glyph
 {
     private let path: NSBezierPath
-    private let color: NSColor?
+    private let color: NSColor
 
     class func makeAllGlyphs() -> [Glyph]
     {
@@ -28,7 +28,6 @@ class Glyph
         for c in Configuration.sharedInstance.colors {
             allGlyphs.append(Glyph(path: triangle, color: c))
         }
-        allGlyphs.append(Glyph(path: triangle, color: nil)) // TODO: config?
         return allGlyphs
     }
     
@@ -43,7 +42,7 @@ class Glyph
     }
     
     
-    init(path: NSBezierPath, color: NSColor?)
+    init(path: NSBezierPath, color: NSColor)
     {
         self.path = path
         self.color = color
@@ -69,14 +68,12 @@ class Glyph
         scaledPath.transform(using: AffineTransform(scaleByX: size.width * (1 - shrinkFactor), byY: size.width * (1 - shrinkFactor)))
         scaledPath.transform(using: AffineTransform(translationByX: size.width * shrinkFactor/2, byY: size.width * shrinkFactor/2))
         // we're moving the triangle down by a tiny amount to account for different rendering of line at bottom and pointy angle at top
-        scaledPath.transform(using: AffineTransform(translationByX: 0, byY: -0.03 * size.height))
+        scaledPath.transform(using: AffineTransform(translationByX: 0, byY: -0.04 * size.height))
 
-        if let color = color {
-            color.set()
-            scaledPath.fill()
-            color.lighter().set()
-            scaledPath.stroke()
-        }
+        color.set()
+        scaledPath.fill()
+        color.lighter().set()
+        scaledPath.stroke()
 
 //        var p = NSBezierPath()
 //        p.move(to: NSMakePoint(0, 0))

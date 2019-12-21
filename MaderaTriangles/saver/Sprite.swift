@@ -32,6 +32,7 @@ class Sprite
     var glyphId: Int
     var pos: Vector2
     var rotation: Float
+    var wobbleFactor: Double
     var stretchFactor: CGFloat
     var flipState: FlipState
     var flipStart: Double
@@ -43,6 +44,8 @@ class Sprite
         self.glyphId = glyphId
         self.pos = position
         self.rotation = rotation
+
+        self.wobbleFactor = Util.randomDouble(10) + 5
         
         self.stretchFactor = -0.5
         self.flipState = .finished
@@ -75,21 +78,21 @@ class Sprite
             flipStart = now
             flipState = .flipping
         case .flipping:
-            let d = (now - flipStart) * 3 // TODO: config?
+            let d = (now - flipStart) / Configuration.flipDuration
             if d < 1 {
                 let oldFactor = stretchFactor
                 stretchFactor = CGFloat(d - 0.5)
                 if oldFactor < 0 && stretchFactor > 0 {
-                    glyphId = Util.randomInt(6) // TODO: this needs to be glyphs.count
+                    glyphId = Util.randomInt(5) // TODO: this needs to be glyphs.count
                 }
             } else {
-                flipState = .finished
+                flipState = .wobbling
             }
         case .wobbling:
-            let d = (now - flipStart) + Double.pi - 1
-            let f = abs(CGFloat(2/(5*d) * sin(5+Double.pi+d)))
-            stretchFactor = -0.5 + f
-            if f < 0.00005 {
+            let d = now - flipStart - Configuration.flipDuration
+            let f = CGFloat( 0.015 * (2.82 - log(5*d+1)) * sin(wobbleFactor*d) )
+            stretchFactor = 0.5 - abs(f)
+            if d > Double.pi {
                 flipState = .finished
             }
         case .finished:
