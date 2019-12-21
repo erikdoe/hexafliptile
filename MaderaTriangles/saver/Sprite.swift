@@ -28,11 +28,11 @@ enum FlipState: Int {
 class Sprite
 {
     let size: NSSize
+    var flipSpeed: Double
 
     var glyphId: Int
     var pos: Vector2
     var rotation: Float
-    var wobbleFactor: Double
     var stretchFactor: CGFloat
     var flipState: FlipState
     var flipStart: Double
@@ -40,13 +40,12 @@ class Sprite
     init(glyphId: Int, position: Vector2, size: NSSize, rotation: Float)
     {
         self.size = size
+        self.flipSpeed = 1 / (Util.randomDouble() + 2)
 
         self.glyphId = glyphId
         self.pos = position
         self.rotation = rotation
 
-        self.wobbleFactor = Util.randomDouble(10) + 5
-        
         self.stretchFactor = -0.5
         self.flipState = .finished
         self.flipStart = 0
@@ -75,10 +74,12 @@ class Sprite
 
         switch flipState {
         case .starting:
-            flipStart = now
-            flipState = .flipping
+            if Util.randomDouble() < 0.2 {
+                flipStart = now
+                flipState = .flipping
+            }
         case .flipping:
-            let d = (now - flipStart) / Configuration.flipDuration
+            let d = (now - flipStart) / flipSpeed
             if d < 1 {
                 let oldFactor = stretchFactor
                 stretchFactor = CGFloat(d - 0.5)
@@ -89,8 +90,8 @@ class Sprite
                 flipState = .wobbling
             }
         case .wobbling:
-            let d = now - flipStart - Configuration.flipDuration
-            let f = CGFloat( 0.015 * (2.82 - log(5*d+1)) * sin(wobbleFactor*d) )
+            let d = now - flipStart - flipSpeed
+            let f = CGFloat( 0.02 * (2.82 - log(5*d+1)) * sin(10*d) )
             stretchFactor = 0.5 - abs(f)
             if d > Double.pi {
                 flipState = .finished

@@ -18,8 +18,6 @@ import ScreenSaver
 
 class Configuration
 {
-    static let flipDuration: Double = 1.0/3.0
-
     static let sharedInstance = Configuration()
 
     let glyphSize = 0.02

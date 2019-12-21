@@ -33,7 +33,7 @@ class Glyph
     
     private static func makeTrianglePath() -> NSBezierPath {
         let p = NSBezierPath();
-        p.lineWidth = 3 // TODO: config?
+        p.lineWidth = 2 // TODO: config?
         p.move(to: NSMakePoint(0, 0))
         p.line(to: NSMakePoint(1, 0))
         p.line(to: NSMakePoint(0.5, CGFloat(sqrt(0.75)))) // 0.5^2 + h^2 = 1^2
@@ -62,7 +62,7 @@ class Glyph
         NSGraphicsContext.saveGraphicsState()
         NSGraphicsContext.current = NSGraphicsContext(bitmapImageRep: imageRep)
 
-        let shrinkFactor: CGFloat = 0.16 // TODO: config?
+        let shrinkFactor: CGFloat = 0.15 // TODO: config?
         let scaledPath = path.copy() as! NSBezierPath
         // we must scale both dimensions with the same factor, otherwise the shape would get distorted
         scaledPath.transform(using: AffineTransform(scaleByX: size.width * (1 - shrinkFactor), byY: size.width * (1 - shrinkFactor)))
@@ -74,26 +74,6 @@ class Glyph
         scaledPath.fill()
         color.lighter().set()
         scaledPath.stroke()
-
-//        var p = NSBezierPath()
-//        p.move(to: NSMakePoint(0, 0))
-//        p.line(to: NSMakePoint(0, 1))
-//        p.line(to: NSMakePoint(1, 1))
-//        p.close()
-//        p.lineWidth = 5
-//        p.transform(using: AffineTransform(scaleByX: size.width, byY: size.width))
-//        NSColor.green.set()
-//        p.stroke()
-//
-//        p = NSBezierPath()
-//        p.move(to: NSMakePoint(0, 0))
-//        p.line(to: NSMakePoint(1, 1))
-//        p.line(to: NSMakePoint(1, 0))
-//        p.close()
-//        p.lineWidth = 3
-//        p.transform(using: AffineTransform(scaleByX: size.width, byY: size.width))
-//        NSColor.blue.set()
-//        p.stroke()
 
         NSGraphicsContext.restoreGraphicsState()
         

@@ -56,7 +56,7 @@ public class Scene {
         let t = (now*1/2).remainder(dividingBy: interval) + interval/2
         let p = 1 - sqrt(1 - Double(s.pos.x)) + Double(s.pos.y) / 3
         let d = t-p
-        if (d > 0 && d < 0.01) && (Util.randomDouble() < 0.3) { // TODO: config?
+        if (d > 0 && d < 0.01) && (Util.randomDouble() < 0.75) { // TODO: config?
             s.flip()
         }
         s.move(to: now)
