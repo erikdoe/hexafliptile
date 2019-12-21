@@ -86,10 +86,10 @@ class Sprite
                 flipState = .wobbling
             }
         case .wobbling:
-            let d = (now - flipStart) * 10 + 2 * Double.pi
-            let f = abs(CGFloat(3/(5*d) * sin(d)))
+            let d = (now - flipStart) + Double.pi - 1
+            let f = abs(CGFloat(2/(5*d) * sin(5+Double.pi+d)))
             stretchFactor = -0.5 + f
-            if f < 0.0001 {
+            if f < 0.00005 {
                 flipState = .finished
             }
         case .finished:
