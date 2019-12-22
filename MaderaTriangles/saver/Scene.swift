@@ -52,10 +52,9 @@ public class Scene {
     }
 
     static func move(sprite s: Sprite, to now: Double) {
-        let interval = 4.0 // TODO: config?
-        let t = (now*1/2).remainder(dividingBy: interval) + interval/2
-        let p = 1 - sqrt(1 - Double(s.pos.x)) + Double(s.pos.y) / 3
-        let d = t-p
+        let t = (now).remainder(dividingBy: 8)
+        let p = exp(t-4)/exp(4)
+        let d = s.pos.x - Float(p)
         if (d > 0 && d < 0.01) && (Util.randomDouble() < 0.75) { // TODO: config?
             s.flip()
         }
