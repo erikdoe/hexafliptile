@@ -44,22 +44,19 @@ public class Scene {
         NSLog("Scene contains \(sprites.count) sprites")
     }
 
-    func moveSprites(to now: Double) {
+    func animate(t now: Double) {
         let speed = 2.0 // TODO: config?
         let interval = 8.0 // TODO: config?
         let flipPos = speed * (now.remainder(dividingBy:interval) + interval/2)
         // using a plain loop for performance reasons
         for i in 0..<sprites.count {
-            Scene.move(sprite: sprites[i], to: now, flipAt: flipPos)
+            let s = sprites[i]
+            let d = Float(flipPos) - s.pos.x - s.pos.y/3
+            if (d > 0 && d < 0.5) {
+                s.flip()
+            }
+            s.animate(t: now)
         }
-    }
-
-    static func move(sprite s: Sprite, to now: Double, flipAt flipPos: Double) {
-        let d = Float(flipPos) - s.pos.x - s.pos.y/3
-        if (d > 0 && d < 0.5) {
-            s.flip()
-        }
-        s.move(to: now)
     }
 
 }

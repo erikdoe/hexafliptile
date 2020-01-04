@@ -31,7 +31,7 @@ class Configuration
         NSColor(webcolor: "#315b8b")
     ]
 
-    var defaults: UserDefaults
+    private var defaults: UserDefaults
 
     
     init()

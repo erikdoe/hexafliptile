@@ -27,15 +27,16 @@ enum FlipState: Int {
 
 class Sprite
 {
-    let size: NSSize
-    var flipSpeed: Double
+    private let size: NSSize
+    private let flipSpeed: Double
 
     var glyphId: Int
     var pos: Vector2
-    var rotation: Float
-    var stretchFactor: CGFloat
-    var flipState: FlipState
-    var flipStart: Double
+
+    private var rotation: Float
+    private var stretchFactor: CGFloat
+    private var flipState: FlipState
+    private var flipStart: Double
     
     init(glyphId: Int, position: Vector2, size: NSSize, rotation: Float)
     {
@@ -72,7 +73,7 @@ class Sprite
         } 
     }
 
-    func move(to now: Double) {
+    func animate(t now: Double) {
 
         switch flipState {
         case .starting:
@@ -86,7 +87,7 @@ class Sprite
                 let oldFactor = stretchFactor
                 stretchFactor = CGFloat(d - 0.5)
                 if oldFactor < 0 && stretchFactor > 0 {
-                    glyphId = Util.randomInt(5) // TODO: this needs to be glyphs.count
+                    glyphId = Util.randomInt(Configuration.sharedInstance.colors.count)
                 }
             } else {
                 flipState = .wobbling

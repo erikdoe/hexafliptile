@@ -53,7 +53,7 @@ extension NSColor
         var green: CGFloat = 0
         var blue: CGFloat = 0
         var alpha: CGFloat = 0
-        let deviceColor = self.usingColorSpaceName(NSColorSpaceName(rawValue: "NSDeviceRGBColorSpace"))
+        let deviceColor = self.usingColorSpace(NSColorSpace.deviceRGB)
         deviceColor?.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
         return MTLClearColor(red: Double(red), green: Double(green), blue: Double(blue), alpha: Double(alpha))
     }

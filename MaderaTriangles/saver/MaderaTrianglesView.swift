@@ -111,7 +111,7 @@ class MaderaTrianglesView: MetalScreenSaverView
 
     override func animateOneFrame()
     {
-        scene.moveSprites(to: outputTime)
+        scene.animate(t: outputTime)
         drawFrame()
 //        DispatchQueue.main.async() {
 //            self.needsDisplay = true
