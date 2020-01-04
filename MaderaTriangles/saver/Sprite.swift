@@ -40,7 +40,7 @@ class Sprite
     init(glyphId: Int, position: Vector2, size: NSSize, rotation: Float)
     {
         self.size = size
-        self.flipSpeed = 1 / (Util.randomDouble() + 2)
+        self.flipSpeed = Util.randomDouble() * 2 + 2 // TODO: config?
 
         self.glyphId = glyphId
         self.pos = position
@@ -67,19 +67,21 @@ class Sprite
     }
     
     func flip() {
-        flipState = .starting
+        if flipState == .finished {
+            flipState = .starting
+        } 
     }
 
     func move(to now: Double) {
 
         switch flipState {
         case .starting:
-            if Util.randomDouble() < 0.2 {
+            if Util.randomDouble() < 0.15 { // TODO: config?
                 flipStart = now
                 flipState = .flipping
             }
         case .flipping:
-            let d = (now - flipStart) / flipSpeed
+            let d = (now - flipStart) * flipSpeed
             if d < 1 {
                 let oldFactor = stretchFactor
                 stretchFactor = CGFloat(d - 0.5)
@@ -90,7 +92,8 @@ class Sprite
                 flipState = .wobbling
             }
         case .wobbling:
-            let d = now - flipStart - flipSpeed
+            // d = 0 for a value of now that makes d = 1 in .flipping
+            let d = now - flipStart - 1/flipSpeed
             let f = CGFloat( 0.02 * (2.82 - log(5*d+1)) * sin(10*d) )
             stretchFactor = 0.5 - abs(f)
             if d > Double.pi {

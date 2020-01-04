@@ -45,17 +45,18 @@ public class Scene {
     }
 
     func moveSprites(to now: Double) {
+        let speed = 2.0 // TODO: config?
+        let interval = 8.0 // TODO: config?
+        let flipPos = speed * (now.remainder(dividingBy:interval) + interval/2)
         // using a plain loop for performance reasons
         for i in 0..<sprites.count {
-            Scene.move(sprite: sprites[i], to: now)
+            Scene.move(sprite: sprites[i], to: now, flipAt: flipPos)
         }
     }
 
-    static func move(sprite s: Sprite, to now: Double) {
-        let t = (now).remainder(dividingBy: 8)
-        let p = exp(t-4)/exp(4)
-        let d = s.pos.x - Float(p)
-        if (d > 0 && d < 0.01) && (Util.randomDouble() < 0.75) { // TODO: config?
+    static func move(sprite s: Sprite, to now: Double, flipAt flipPos: Double) {
+        let d = Float(flipPos) - s.pos.x - s.pos.y/3
+        if (d > 0 && d < 0.5) {
             s.flip()
         }
         s.move(to: now)
