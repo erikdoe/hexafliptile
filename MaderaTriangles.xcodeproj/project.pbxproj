@@ -122,8 +122,8 @@
 			isa = PBXGroup;
 			children = (
 				03F526CF238ADC270068DC2C /* MetalScreenSaverView.swift */,
-				03F526CA238ADC270068DC2C /* Shaders.metal */,
 				03F526D1238ADC270068DC2C /* Renderer.swift */,
+				03F526CA238ADC270068DC2C /* Shaders.metal */,
 				03F526C9238ADC270068DC2C /* Statistics.swift */,
 				03F526CB238ADC270068DC2C /* Util.swift */,
 				03F526CE238ADC270068DC2C /* VectorMath.swift */,

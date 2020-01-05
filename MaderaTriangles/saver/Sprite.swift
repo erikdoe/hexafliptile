@@ -33,43 +33,42 @@ class Sprite
     var glyphId: Int
     var pos: Vector2
 
-    private var rotation: Float
     private var stretchFactor: CGFloat
     private var flipState: FlipState
     private var flipStart: Double
+    private var newGlyphId: Int
     
-    init(glyphId: Int, position: Vector2, size: NSSize, rotation: Float)
+    init(glyphId: Int, position: Vector2, size: NSSize)
     {
         self.size = size
-        self.flipSpeed = Util.randomDouble() * 2 + 2 // TODO: config?
+        self.flipSpeed = Util.randomDouble() * 2 + 2
 
         self.glyphId = glyphId
         self.pos = position
-        self.rotation = rotation
 
         self.stretchFactor = -0.5
         self.flipState = .finished
         self.flipStart = 0
+        self.newGlyphId = 0
     }
 
     var corners: (Vector2, Vector2, Vector2, Vector2)
     {
         get
         {
-            let rotationMatrix = Matrix2x2(rotation: rotation)
-
-            let a = pos + Vector2(Float(+size.width * stretchFactor), Float(+size.height * 0.5)) * rotationMatrix
-            let b = pos + Vector2(Float(+size.width * stretchFactor), Float(-size.height * 0.5)) * rotationMatrix
-            let c = pos + Vector2(Float(-size.width * stretchFactor), Float(-size.height * 0.5)) * rotationMatrix
-            let d = pos + Vector2(Float(-size.width * stretchFactor), Float(+size.height * 0.5)) * rotationMatrix
+            let a = pos + Vector2(Float(+size.width * stretchFactor), Float(+size.height * 0.5))
+            let b = pos + Vector2(Float(+size.width * stretchFactor), Float(-size.height * 0.5))
+            let c = pos + Vector2(Float(-size.width * stretchFactor), Float(-size.height * 0.5))
+            let d = pos + Vector2(Float(-size.width * stretchFactor), Float(+size.height * 0.5))
 
             return (a, b, c, d)
         }
     }
     
-    func flip() {
+    func flip(to newGlyphId: Int) {
         if flipState == .finished {
             flipState = .starting
+            self.newGlyphId = newGlyphId
         } 
     }
 
@@ -77,7 +76,7 @@ class Sprite
 
         switch flipState {
         case .starting:
-            if Util.randomDouble() < 0.15 { // TODO: config?
+            if Util.randomDouble() < 0.2 { // TODO: config?
                 flipStart = now
                 flipState = .flipping
             }
@@ -87,16 +86,15 @@ class Sprite
                 let oldFactor = stretchFactor
                 stretchFactor = CGFloat(d - 0.5)
                 if oldFactor < 0 && stretchFactor > 0 {
-                    glyphId = Util.randomInt(Configuration.sharedInstance.colors.count)
+                    glyphId = newGlyphId
                 }
             } else {
                 flipState = .wobbling
             }
         case .wobbling:
             // d = 0 for a value of now that makes d = 1 in .flipping
-            let d = now - flipStart - 1/flipSpeed
-            let f = CGFloat( 0.02 * (2.82 - log(5*d+1)) * sin(10*d) )
-            stretchFactor = 0.5 - abs(f)
+            let d = (now - flipStart - 1/flipSpeed) * (flipSpeed/2)
+            stretchFactor = 0.5 - CGFloat(abs( 0.05 * exp(-d) * sin(5*d) ))
             if d > Double.pi {
                 flipState = .finished
             }

@@ -20,7 +20,7 @@ class Configuration
 {
     static let sharedInstance = Configuration()
 
-    let glyphSize = 0.02
+    let glyphSize = 1 / (1.5 * 30) // TODO: config?
 
     let backgroundColor = NSColor(webcolor: "#000000")
     let colors = [

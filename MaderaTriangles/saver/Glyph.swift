@@ -24,19 +24,23 @@ class Glyph
     class func makeAllGlyphs() -> [Glyph]
     {
         var allGlyphs: [Glyph] = []
-        let triangle = Glyph.makeTrianglePath()
+        let triangle = Glyph.makeHexagonPath()
         for c in Configuration.sharedInstance.colors {
             allGlyphs.append(Glyph(path: triangle, color: c))
         }
         return allGlyphs
     }
     
-    private static func makeTrianglePath() -> NSBezierPath {
+    private static func makeHexagonPath() -> NSBezierPath {
+        let h = CGFloat(sqrt(0.75)) // 0.5^2 + h^2 = 1^2
         let p = NSBezierPath();
         p.lineWidth = 2 // TODO: config?
-        p.move(to: NSMakePoint(0, 0))
-        p.line(to: NSMakePoint(1, 0))
-        p.line(to: NSMakePoint(0.5, CGFloat(sqrt(0.75)))) // 0.5^2 + h^2 = 1^2
+        p.move(to: NSMakePoint(0.25, 0.00))
+        p.line(to: NSMakePoint(0.75, 0.00))
+        p.line(to: NSMakePoint(1.00, h/2))
+        p.line(to: NSMakePoint(0.75, h))
+        p.line(to: NSMakePoint(0.25, h))
+        p.line(to: NSMakePoint(0.00, h/2))
         p.close()
         return p
     }
@@ -53,22 +57,19 @@ class Glyph
         get { path.bounds.width / path.bounds.height }
     }
 
-    func makeBitmap(size: NSSize) -> NSBitmapImageRep
+    func makeBitmap(size: CGFloat) -> NSBitmapImageRep
     {
-        let imageRep = NSBitmapImageRep(bitmapDataPlanes: nil, pixelsWide: Int(size.width), pixelsHigh: Int(size.height), bitsPerSample: 8,
+        let imageRep = NSBitmapImageRep(bitmapDataPlanes: nil, pixelsWide: Int(size), pixelsHigh: Int(size/aspectRatio), bitsPerSample: 8,
                                         samplesPerPixel: 4, hasAlpha: true, isPlanar: false, colorSpaceName: NSColorSpaceName.deviceRGB,
-                                        bytesPerRow: Int(size.width)*4, bitsPerPixel:32)!
+                                        bytesPerRow: Int(size)*4, bitsPerPixel:32)!
 
         NSGraphicsContext.saveGraphicsState()
         NSGraphicsContext.current = NSGraphicsContext(bitmapImageRep: imageRep)
 
-        let shrinkFactor: CGFloat = 0.15 // TODO: config?
+        let shrinkFactor: CGFloat = 0.1 // TODO: config?
         let scaledPath = path.copy() as! NSBezierPath
-        // we must scale both dimensions with the same factor, otherwise the shape would get distorted
-        scaledPath.transform(using: AffineTransform(scaleByX: size.width * (1 - shrinkFactor), byY: size.width * (1 - shrinkFactor)))
-        scaledPath.transform(using: AffineTransform(translationByX: size.width * shrinkFactor/2, byY: size.width * shrinkFactor/2))
-        // we're moving the triangle down by a tiny amount to account for different rendering of line at bottom and pointy angle at top
-        scaledPath.transform(using: AffineTransform(translationByX: 0, byY: -0.04 * size.height))
+        scaledPath.transform(using: AffineTransform(scaleByX: size * (1 - shrinkFactor), byY: size * (1 - shrinkFactor)))
+        scaledPath.transform(using: AffineTransform(translationByX: size * shrinkFactor/2, byY: size * shrinkFactor/2))
 
         color.set()
         scaledPath.fill()

@@ -89,7 +89,7 @@ class MaderaTrianglesView: MetalScreenSaverView
 
 
     private func updateSprites(glyphSize: Double) {
-        scene.makeSprites(glyphs: glyphs, height: glyphSize)
+        scene.makeSprites(glyphs: glyphs, size: glyphSize)
     }
 
     private func updateSizeAndTextures(glyphSize: Double)
@@ -97,11 +97,11 @@ class MaderaTrianglesView: MetalScreenSaverView
         let divisor = max(bounds.size.width, bounds.size.height)
         renderer.setOutputSize(NSMakeSize(bounds.size.width / divisor, bounds.size.height / divisor))
 
-        let widthInPixel = floor(min(bounds.width, bounds.height) * CGFloat(glyphSize))
-        let hidpiFactor = (window!.backingScaleFactor)
+        let widthInPixel = floor(bounds.width) * CGFloat(glyphSize)
+        let hidpiFactor = window!.backingScaleFactor
 
         for (i, g) in glyphs.enumerated() {
-            let bitmap = g.makeBitmap(size: NSMakeSize(widthInPixel * hidpiFactor, widthInPixel * hidpiFactor / g.aspectRatio))
+            let bitmap = g.makeBitmap(size: widthInPixel * hidpiFactor)
             renderer.setTexture(image: bitmap, at: i)
         }
     }
