@@ -20,28 +20,42 @@ class Configuration
 {
     static let sharedInstance = Configuration()
 
-    let glyphSize = 1 / (1.5 * 30) // TODO: config?
-
-    let backgroundColor = NSColor(webcolor: "#000000")
-    let colors = [
-        NSColor(webcolor: "#c85c6c"),
-        NSColor(webcolor: "#fe7567"),
-        NSColor(webcolor: "#fcc96c"),
-        NSColor(webcolor: "#548ecb"),
-        NSColor(webcolor: "#315b8b")
-    ]
-
     private var defaults: UserDefaults
 
-    
+    let glyphSize = 1 / (1.5 * 30) // TODO: config?
+
+    var backgroundColor = NSColor(webcolor: "#000000")
+    var palettes: [[String]]
+
     init()
     {
+        palettes = Configuration.loadPalettes()
         let identifier = Bundle(for: Configuration.self).bundleIdentifier!
         defaults = ScreenSaverDefaults(forModuleWithName: identifier)! as UserDefaults
         defaults.register(defaults: [:])
         update()
     }
-    
+
+    private static func loadPalettes() -> [[String]]
+    {
+        let url = Bundle(for: Configuration.self).url(forResource: "Colors", withExtension: "json")!
+        do {
+            let data = try Data(contentsOf: url, options: .mappedIfSafe)
+            let jsonResult = try JSONSerialization.jsonObject(with: data, options: [])
+            return jsonResult as! [[String]]
+        } catch {
+            NSLog("Error loading 'Colors.json'; using default palette")
+            return [[  "#c85c6c", "#fe7567", "#fcc96c", "#548ecb", "#315b8b"  ]]
+        }
+    }
+
+    var colors: [NSColor]
+    {
+        get
+        {
+            palettes[9].map { NSColor(webcolor: $0 as NSString) }
+        }
+    }
 
     private func update()
     {

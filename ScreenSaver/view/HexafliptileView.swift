@@ -17,8 +17,8 @@
 import ScreenSaver
 
 
-@objc(MaderaTrianglesView)
-class MaderaTrianglesView: MetalScreenSaverView
+@objc(HexafliptileView)
+class HexafliptileView: MetalScreenSaverView
 {
     var glyphs: [Glyph]!
     var scene: Scene!

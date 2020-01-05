@@ -27,7 +27,7 @@ class AppDelegate: NSObject
 
     func setupAndStartAnimation()
     {
-        let saverName = "MaderaTriangles"
+        let saverName = "Hexafliptile"
         guard let saverBundle = loadSaverBundle(saverName) else {
             NSLog("Can't find or load bundle for saver named \(saverName).")
             return

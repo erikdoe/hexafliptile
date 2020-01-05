@@ -21,6 +21,6 @@
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2019 Mulle Kybernetik. All rights reserved.</string>
 	<key>NSPrincipalClass</key>
-	<string>MaderaTrianglesView</string>
+	<string>HexafliptileView</string>
 </dict>
 </plist>

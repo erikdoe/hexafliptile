@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0355EB8023C23F9C0006DA5A /* Colors.json in Resources */ = {isa = PBXBuildFile; fileRef = 0355EB7F23C23F9C0006DA5A /* Colors.json */; };
 		03F526D7238ADC270068DC2C /* ConfigureSheetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F526C5238ADC270068DC2C /* ConfigureSheetController.swift */; };
 		03F526D8238ADC270068DC2C /* ConfigureSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 03F526C6238ADC270068DC2C /* ConfigureSheet.xib */; };
 		03F526D9238ADC270068DC2C /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F526C7238ADC270068DC2C /* Configuration.swift */; };
@@ -17,7 +18,7 @@
 		03F526DF238ADC270068DC2C /* VectorMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F526CE238ADC270068DC2C /* VectorMath.swift */; };
 		03F526E0238ADC270068DC2C /* MetalScreenSaverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F526CF238ADC270068DC2C /* MetalScreenSaverView.swift */; };
 		03F526E2238ADC270068DC2C /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F526D1238ADC270068DC2C /* Renderer.swift */; };
-		03F526E3238ADC270068DC2C /* MaderaTrianglesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F526D3238ADC270068DC2C /* MaderaTrianglesView.swift */; };
+		03F526E3238ADC270068DC2C /* HexafliptileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F526D3238ADC270068DC2C /* HexafliptileView.swift */; };
 		03F526E4238ADC270068DC2C /* Scene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F526D4238ADC270068DC2C /* Scene.swift */; };
 		03F526E5238ADC270068DC2C /* Sprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F526D5238ADC270068DC2C /* Sprite.swift */; };
 		03F526E6238ADC270068DC2C /* Glyph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F526D6238ADC270068DC2C /* Glyph.swift */; };
@@ -37,7 +38,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		03F526B7238ADC140068DC2C /* MaderaTriangles.saver */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MaderaTriangles.saver; sourceTree = BUILT_PRODUCTS_DIR; };
+		0355EB7F23C23F9C0006DA5A /* Colors.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Colors.json; sourceTree = "<group>"; };
+		03F526B7238ADC140068DC2C /* Hexafliptile.saver */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Hexafliptile.saver; sourceTree = BUILT_PRODUCTS_DIR; };
 		03F526BE238ADC140068DC2C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		03F526C5238ADC270068DC2C /* ConfigureSheetController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigureSheetController.swift; sourceTree = "<group>"; };
 		03F526C6238ADC270068DC2C /* ConfigureSheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ConfigureSheet.xib; sourceTree = "<group>"; };
@@ -49,7 +51,7 @@
 		03F526CE238ADC270068DC2C /* VectorMath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VectorMath.swift; sourceTree = "<group>"; };
 		03F526CF238ADC270068DC2C /* MetalScreenSaverView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetalScreenSaverView.swift; sourceTree = "<group>"; };
 		03F526D1238ADC270068DC2C /* Renderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Renderer.swift; sourceTree = "<group>"; };
-		03F526D3238ADC270068DC2C /* MaderaTrianglesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MaderaTrianglesView.swift; sourceTree = "<group>"; };
+		03F526D3238ADC270068DC2C /* HexafliptileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HexafliptileView.swift; sourceTree = "<group>"; };
 		03F526D4238ADC270068DC2C /* Scene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scene.swift; sourceTree = "<group>"; };
 		03F526D5238ADC270068DC2C /* Sprite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sprite.swift; sourceTree = "<group>"; };
 		03F526D6238ADC270068DC2C /* Glyph.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Glyph.swift; sourceTree = "<group>"; };
@@ -82,7 +84,7 @@
 		03F526AD238ADC140068DC2C = {
 			isa = PBXGroup;
 			children = (
-				03F526B9238ADC140068DC2C /* MaderaTriangles */,
+				03F526B9238ADC140068DC2C /* ScreenSaver */,
 				03F526EC238ADCBF0068DC2C /* Runner */,
 				03F526B8238ADC140068DC2C /* Products */,
 			);
@@ -91,21 +93,22 @@
 		03F526B8238ADC140068DC2C /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				03F526B7238ADC140068DC2C /* MaderaTriangles.saver */,
+				03F526B7238ADC140068DC2C /* Hexafliptile.saver */,
 				03F526EB238ADCBF0068DC2C /* Runner.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		03F526B9238ADC140068DC2C /* MaderaTriangles */ = {
+		03F526B9238ADC140068DC2C /* ScreenSaver */ = {
 			isa = PBXGroup;
 			children = (
-				03F526D2238ADC270068DC2C /* saver */,
+				03F526D2238ADC270068DC2C /* view */,
 				03F526C4238ADC270068DC2C /* configuration */,
 				03F526C8238ADC270068DC2C /* library */,
 				03F526BE238ADC140068DC2C /* Info.plist */,
+				0355EB7F23C23F9C0006DA5A /* Colors.json */,
 			);
-			path = MaderaTriangles;
+			path = ScreenSaver;
 			sourceTree = "<group>";
 		};
 		03F526C4238ADC270068DC2C /* configuration */ = {
@@ -132,15 +135,15 @@
 			path = library;
 			sourceTree = "<group>";
 		};
-		03F526D2238ADC270068DC2C /* saver */ = {
+		03F526D2238ADC270068DC2C /* view */ = {
 			isa = PBXGroup;
 			children = (
-				03F526D3238ADC270068DC2C /* MaderaTrianglesView.swift */,
+				03F526D3238ADC270068DC2C /* HexafliptileView.swift */,
 				03F526D4238ADC270068DC2C /* Scene.swift */,
 				03F526D5238ADC270068DC2C /* Sprite.swift */,
 				03F526D6238ADC270068DC2C /* Glyph.swift */,
 			);
-			path = saver;
+			path = view;
 			sourceTree = "<group>";
 		};
 		03F526EC238ADCBF0068DC2C /* Runner */ = {
@@ -168,9 +171,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		03F526B6238ADC140068DC2C /* MaderaTriangles */ = {
+		03F526B6238ADC140068DC2C /* Hexafliptile */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 03F526C1238ADC140068DC2C /* Build configuration list for PBXNativeTarget "MaderaTriangles" */;
+			buildConfigurationList = 03F526C1238ADC140068DC2C /* Build configuration list for PBXNativeTarget "Hexafliptile" */;
 			buildPhases = (
 				03F526B2238ADC140068DC2C /* Sources */,
 				03F526B3238ADC140068DC2C /* Frameworks */,
@@ -181,9 +184,9 @@
 			);
 			dependencies = (
 			);
-			name = MaderaTriangles;
+			name = Hexafliptile;
 			productName = MaderaTriangles;
-			productReference = 03F526B7238ADC140068DC2C /* MaderaTriangles.saver */;
+			productReference = 03F526B7238ADC140068DC2C /* Hexafliptile.saver */;
 			productType = "com.apple.product-type.bundle";
 		};
 		03F526EA238ADCBF0068DC2C /* Runner */ = {
@@ -222,7 +225,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 03F526B1238ADC140068DC2C /* Build configuration list for PBXProject "MaderaTriangles" */;
+			buildConfigurationList = 03F526B1238ADC140068DC2C /* Build configuration list for PBXProject "Hexafliptile" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -235,7 +238,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				03F526B6238ADC140068DC2C /* MaderaTriangles */,
+				03F526B6238ADC140068DC2C /* Hexafliptile */,
 				03F526EA238ADCBF0068DC2C /* Runner */,
 			);
 		};
@@ -247,6 +250,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				03F526D8238ADC270068DC2C /* ConfigureSheet.xib in Resources */,
+				0355EB8023C23F9C0006DA5A /* Colors.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -266,7 +270,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				03F526E3238ADC270068DC2C /* MaderaTrianglesView.swift in Sources */,
+				03F526E3238ADC270068DC2C /* HexafliptileView.swift in Sources */,
 				03F526DF238ADC270068DC2C /* VectorMath.swift in Sources */,
 				03F526D9238ADC270068DC2C /* Configuration.swift in Sources */,
 				03F526E5238ADC270068DC2C /* Sprite.swift in Sources */,
@@ -295,7 +299,7 @@
 /* Begin PBXTargetDependency section */
 		03F526FA238ADCC90068DC2C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 03F526B6238ADC140068DC2C /* MaderaTriangles */;
+			target = 03F526B6238ADC140068DC2C /* Hexafliptile */;
 			targetProxy = 03F526F9238ADCC90068DC2C /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -431,7 +435,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 28U2VZ7DF8;
-				INFOPLIST_FILE = MaderaTriangles/Info.plist;
+				INFOPLIST_FILE = ScreenSaver/Info.plist;
 				INSTALL_PATH = "$(HOME)/Library/Screen Savers";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mulle-kybernetik.MaderaTriangles";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -445,7 +449,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 28U2VZ7DF8;
-				INFOPLIST_FILE = MaderaTriangles/Info.plist;
+				INFOPLIST_FILE = ScreenSaver/Info.plist;
 				INSTALL_PATH = "$(HOME)/Library/Screen Savers";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mulle-kybernetik.MaderaTriangles";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -500,7 +504,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		03F526B1238ADC140068DC2C /* Build configuration list for PBXProject "MaderaTriangles" */ = {
+		03F526B1238ADC140068DC2C /* Build configuration list for PBXProject "Hexafliptile" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				03F526BF238ADC140068DC2C /* Debug */,
@@ -509,7 +513,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		03F526C1238ADC140068DC2C /* Build configuration list for PBXNativeTarget "MaderaTriangles" */ = {
+		03F526C1238ADC140068DC2C /* Build configuration list for PBXNativeTarget "Hexafliptile" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				03F526C2238ADC140068DC2C /* Debug */,

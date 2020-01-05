@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:MaderaTriangles.xcodeproj">
+      location = "self:/Users/erik/Projects/Screen Savers/madera-triangles/Hexafliptile.xcodeproj">
    </FileRef>
 </Workspace>
