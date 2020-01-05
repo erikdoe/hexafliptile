@@ -24,7 +24,7 @@ class ConfigureSheetController : NSObject
     
     @IBOutlet var window: NSWindow!
     @IBOutlet var versionField: NSTextField!
-    @IBOutlet var waveTypePopUp: NSPopUpButton!
+    @IBOutlet var sizeSlider: NSSlider!
 
     override init()
     {
@@ -36,14 +36,14 @@ class ConfigureSheetController : NSObject
         myBundle.loadNibNamed("ConfigureSheet", owner: self, topLevelObjects: nil)
 
         let bundleVersion = (myBundle.infoDictionary!["CFBundleShortVersionString"] ?? "n/a") as! String
-        let sourceVersion = (myBundle.infoDictionary!["GWSourceVersion"] ?? "n/a") as! String
+        let sourceVersion = (myBundle.infoDictionary!["Source Version"] ?? "n/a") as! String
         versionField.stringValue = String(format: "Version %@ (%@)", bundleVersion, sourceVersion)
     }
     
 
     @IBAction func openProjectPage(_ sender: AnyObject)
     {
-        NSWorkspace.shared.open(URL(string: "http://github.com/thoughtworks/dancing-glyphs")!);
+        NSWorkspace.shared.open(URL(string: "https://github.com/erikdoe/hexafliptile")!);
     }
 
     @IBAction func closeConfigureSheet(_ sender: NSButton)
@@ -57,10 +57,12 @@ class ConfigureSheetController : NSObject
 
     func loadConfiguration()
     {
+        sizeSlider.integerValue = configuration.tiles
     }
 
     private func saveConfiguration()
     {
+        configuration.tiles = sizeSlider.integerValue
     }
 
 }

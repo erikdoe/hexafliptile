@@ -179,6 +179,7 @@
 				03F526B3238ADC140068DC2C /* Frameworks */,
 				03F526B4238ADC140068DC2C /* Headers */,
 				03F526B5238ADC140068DC2C /* Resources */,
+				0355EB8123C2491B0006DA5A /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -264,6 +265,26 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		0355EB8123C2491B0006DA5A /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "SHA=`git rev-parse --short HEAD | tr '[a-z]' '[A-Z]'`\nsed -i \"\" \"s/#gitsha#/$SHA/\" \"${BUILT_PRODUCTS_DIR}\"/Hexafliptile.saver/Contents/Info.plist\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		03F526B2238ADC140068DC2C /* Sources */ = {

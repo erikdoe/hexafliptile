@@ -22,7 +22,7 @@ class Configuration
 
     private var defaults: UserDefaults
 
-    let glyphSize = 1 / (1.5 * 30) // TODO: config?
+    var tiles = 25
 
     var backgroundColor = NSColor(webcolor: "#000000")
     var palettes: [[String]]
@@ -45,7 +45,7 @@ class Configuration
             return jsonResult as! [[String]]
         } catch {
             NSLog("Error loading 'Colors.json'; using default palette")
-            return [[  "#c85c6c", "#fe7567", "#fcc96c", "#548ecb", "#315b8b"  ]]
+            return [[  "#ef476f", "#ffd166", "#06d6a0", "#118ab2", "#073b4c"  ]]
         }
     }
 
@@ -54,6 +54,14 @@ class Configuration
         get
         {
             palettes[9].map { NSColor(webcolor: $0 as NSString) }
+        }
+    }
+
+    var glyphSize: Double
+    {
+        get
+        {
+            1 / (1.5 * Double(tiles))
         }
     }
 
