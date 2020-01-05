@@ -1,5 +1,5 @@
 /*
- *  Copyright 2016 Erik Doernenburg
+ *  Copyright 2016-2020 Erik Doernenburg
  *
  *  Licensed under the Apache License, Version 2.0 (the "License"); you may
  *  not use these files except in compliance with the License. You may obtain
