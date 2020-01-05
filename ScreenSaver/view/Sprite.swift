@@ -18,7 +18,7 @@ import Cocoa
 
 enum FlipState: Int {
     case
-         starting,
+         waiting,
          flipping,
          wobbling,
          finished
@@ -32,8 +32,10 @@ class Sprite
 
     var glyphId: Int
     var pos: Vector2
+    var corners: (Vector2, Vector2, Vector2, Vector2)
 
     private var stretchFactor: CGFloat
+
     private var flipState: FlipState
     private var flipStart: Double
     private var newGlyphId: Int
@@ -46,38 +48,29 @@ class Sprite
         self.glyphId = glyphId
         self.pos = position
 
+        self.corners = (Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0))
         self.stretchFactor = -0.5
+
         self.flipState = .finished
         self.flipStart = 0
         self.newGlyphId = 0
-    }
 
-    var corners: (Vector2, Vector2, Vector2, Vector2)
-    {
-        get
-        {
-            let a = pos + Vector2(Float(+size.width * stretchFactor), Float(+size.height * 0.5))
-            let b = pos + Vector2(Float(+size.width * stretchFactor), Float(-size.height * 0.5))
-            let c = pos + Vector2(Float(-size.width * stretchFactor), Float(-size.height * 0.5))
-            let d = pos + Vector2(Float(-size.width * stretchFactor), Float(+size.height * 0.5))
-
-            return (a, b, c, d)
-        }
+        updateCorners()
     }
     
-    func flip(to newGlyphId: Int) {
+    func flip(to glyphId: Int, at start: Double) {
         if flipState == .finished {
-            flipState = .starting
-            self.newGlyphId = newGlyphId
-        } 
+            newGlyphId = glyphId
+            flipStart = start
+            flipState = .waiting
+        }
     }
 
     func animate(t now: Double) {
 
         switch flipState {
-        case .starting:
-            if Util.randomDouble() < 0.2 { // TODO: config?
-                flipStart = now
+        case .waiting:
+            if now > flipStart {
                 flipState = .flipping
             }
         case .flipping:
@@ -88,6 +81,7 @@ class Sprite
                 if oldFactor < 0 && stretchFactor > 0 {
                     glyphId = newGlyphId
                 }
+                updateCorners()
             } else {
                 flipState = .wobbling
             }
@@ -97,11 +91,22 @@ class Sprite
             stretchFactor = 0.5 - CGFloat(abs( 0.05 * exp(-d) * sin(5*d) ))
             if d > Double.pi {
                 flipState = .finished
+                stretchFactor = 0.5
             }
+            updateCorners()
         case .finished:
-            stretchFactor = 0.5
+            break
         }
         
+    }
+
+    private func updateCorners() {
+        corners = (
+            pos + Vector2(Float(+size.width * stretchFactor), Float(+size.height * 0.5)),
+            pos + Vector2(Float(+size.width * stretchFactor), Float(-size.height * 0.5)),
+            pos + Vector2(Float(-size.width * stretchFactor), Float(-size.height * 0.5)),
+            pos + Vector2(Float(-size.width * stretchFactor), Float(+size.height * 0.5))
+        )
     }
     
 }

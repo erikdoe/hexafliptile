@@ -26,10 +26,12 @@ class Configuration
 
     var backgroundColor = NSColor(webcolor: "#000000")
     var palettes: [[String]]
+    var colors: [NSColor]
 
     init()
     {
         palettes = Configuration.loadPalettes()
+        colors = palettes[9].map { NSColor(webcolor: $0 as NSString) }
         let identifier = Bundle(for: Configuration.self).bundleIdentifier!
         defaults = ScreenSaverDefaults(forModuleWithName: identifier)! as UserDefaults
         defaults.register(defaults: [:])
@@ -45,15 +47,7 @@ class Configuration
             return jsonResult as! [[String]]
         } catch {
             NSLog("Error loading 'Colors.json'; using default palette")
-            return [[  "#ef476f", "#ffd166", "#06d6a0", "#118ab2", "#073b4c"  ]]
-        }
-    }
-
-    var colors: [NSColor]
-    {
-        get
-        {
-            palettes[9].map { NSColor(webcolor: $0 as NSString) }
+            return [[ "#ef476f", "#ffd166", "#06d6a0", "#118ab2", "#073b4c" ]]
         }
     }
 

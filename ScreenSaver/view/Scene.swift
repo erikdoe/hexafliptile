@@ -49,14 +49,14 @@ public class Scene {
 
     func animate(t now: Double) {
         let speed = 2.0 // TODO: config?
-        let interval = 4.0 // TODO: config?
+        let interval = 5.0 // TODO: config?
         let flipPos = speed * (now.remainder(dividingBy:interval) + interval/2)
         // using a plain loop for performance reasons
         for i in 0..<sprites.count {
             let s = sprites[i]
             let d = Float(flipPos) - s.pos.x + s.pos.y/2
             if (d > 0 && d < 0.5) {
-                s.flip(to: Util.randomInt(Configuration.sharedInstance.colors.count))
+                s.flip(to: Util.randomInt(Configuration.sharedInstance.colors.count), at: now + pow(Util.randomDouble(), 40) / 3)
             }
             s.animate(t: now)
         }

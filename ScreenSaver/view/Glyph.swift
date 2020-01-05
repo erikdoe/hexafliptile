@@ -34,7 +34,6 @@ class Glyph
     private static func makeHexagonPath() -> NSBezierPath {
         let h = CGFloat(sqrt(0.75)) // 0.5^2 + h^2 = 1^2
         let p = NSBezierPath();
-        p.lineWidth = 2 // TODO: config?
         p.move(to: NSMakePoint(0.25, 0.00))
         p.line(to: NSMakePoint(0.75, 0.00))
         p.line(to: NSMakePoint(1.00, h/2))
@@ -66,14 +65,15 @@ class Glyph
         NSGraphicsContext.saveGraphicsState()
         NSGraphicsContext.current = NSGraphicsContext(bitmapImageRep: imageRep)
 
-        let shrinkFactor: CGFloat = 0.1 // TODO: config?
+        let shrinkFactor: CGFloat = 0.18 // TODO: config?
         let scaledPath = path.copy() as! NSBezierPath
         scaledPath.transform(using: AffineTransform(scaleByX: size * (1 - shrinkFactor), byY: size * (1 - shrinkFactor)))
         scaledPath.transform(using: AffineTransform(translationByX: size * shrinkFactor/2, byY: size * shrinkFactor/2))
 
         color.set()
         scaledPath.fill()
-        color.lighter().set()
+        color.lighter(0.15).set()
+        scaledPath.lineWidth = size * shrinkFactor/2
         scaledPath.stroke()
 
         NSGraphicsContext.restoreGraphicsState()
