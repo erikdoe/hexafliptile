@@ -30,7 +30,6 @@ class HexafliptileView: MetalScreenSaverView
     override init?(frame: NSRect, isPreview: Bool)
     {
         super.init(frame: frame, isPreview: isPreview)
-        glyphs = Glyph.makeAllGlyphs()
     }
 
     required init?(coder aDecoder: NSCoder)
@@ -65,6 +64,8 @@ class HexafliptileView: MetalScreenSaverView
     override func startAnimation()
     {
         let configuration = Configuration.sharedInstance
+
+        glyphs = Glyph.makeAllGlyphs()
 
         scene = Scene()
         updateSprites(glyphSize: configuration.glyphSize)

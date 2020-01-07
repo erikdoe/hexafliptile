@@ -25,6 +25,7 @@ class ConfigureSheetController : NSObject
     @IBOutlet var window: NSWindow!
     @IBOutlet var versionField: NSTextField!
     @IBOutlet var sizeSlider: NSSlider!
+    @IBOutlet var palettePopup: NSPopUpButton!
 
     override init()
     {
@@ -58,11 +59,57 @@ class ConfigureSheetController : NSObject
     func loadConfiguration()
     {
         sizeSlider.integerValue = configuration.tiles
+        
+        palettePopup.removeAllItems()
+        for palette in configuration.paletteList {
+            appendItem(for: palette, to: palettePopup)
+        }
+        var index = palettePopup.indexOfItem(withRepresentedObject: configuration.palette)
+        if (index < 0) {
+            appendItem(for: configuration.palette, to: palettePopup)
+            index = palettePopup.numberOfItems - 1
+        }
+        palettePopup.selectItem(at: index)
+    }
+
+    private func appendItem(for palette: [String], to popup: NSPopUpButton) {
+        palettePopup.addItem(withTitle: palette.description)
+        let item = palettePopup.item(at: palettePopup.numberOfItems - 1)!
+        item.image = makeImage(palette: palette)
+        item.representedObject = palette
     }
 
     private func saveConfiguration()
     {
         configuration.tiles = sizeSlider.integerValue
+        configuration.palette = palettePopup.selectedItem?.representedObject as! [String]
+    }
+
+
+    func makeImage(palette: [String]) -> NSImage
+    {
+        let unit = CGFloat(16)
+        let size = NSSize(width: CGFloat(palette.count)*unit, height: unit)
+
+        let image = NSImage(size: size)
+        let imageRep = NSBitmapImageRep(bitmapDataPlanes: nil, pixelsWide: Int(size.width), pixelsHigh: Int(size.height), bitsPerSample: 8,
+                                        samplesPerPixel: 4, hasAlpha: true, isPlanar: false, colorSpaceName: NSColorSpaceName.deviceRGB,
+                                        bytesPerRow: Int(size.width)*4, bitsPerPixel:32)!
+
+        NSGraphicsContext.saveGraphicsState()
+        NSGraphicsContext.current = NSGraphicsContext(bitmapImageRep: imageRep)
+
+        let path = NSBezierPath(rect: NSMakeRect(0, 0, unit, unit));
+        for colorString in palette {
+            NSColor(webcolor: colorString as NSString).set()
+            path.fill()
+            path.transform(using: AffineTransform(translationByX: unit, byY: 0))
+        }
+
+        NSGraphicsContext.restoreGraphicsState()
+
+        image.addRepresentation(imageRep)
+        return image
     }
 
 }

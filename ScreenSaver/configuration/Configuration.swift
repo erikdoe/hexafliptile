@@ -22,20 +22,22 @@ class Configuration
 
     private var defaults: UserDefaults
 
-    var tiles = 25
-
-    var backgroundColor = NSColor(webcolor: "#000000")
-    var palettes: [[String]]
+    var paletteList: [[String]]
     var colors: [NSColor]
+    var backgroundColor = NSColor(webcolor: "#000000")
 
     init()
     {
-        palettes = Configuration.loadPalettes()
-        colors = palettes[9].map { NSColor(webcolor: $0 as NSString) }
+        paletteList = Configuration.loadPalettes()
+        colors = []
         let identifier = Bundle(for: Configuration.self).bundleIdentifier!
         defaults = ScreenSaverDefaults(forModuleWithName: identifier)! as UserDefaults
-        defaults.register(defaults: [:])
+        defaults.register(defaults: [
+            "tiles": 25,
+            "palette": [ "#ef476f", "#ffd166", "#06d6a0", "#118ab2", "#073b4c" ]
+            ])
         update()
+        colors = palette.map { NSColor(webcolor: $0 as NSString) }
     }
 
     private static func loadPalettes() -> [[String]]
@@ -46,8 +48,8 @@ class Configuration
             let jsonResult = try JSONSerialization.jsonObject(with: data, options: [])
             return jsonResult as! [[String]]
         } catch {
-            NSLog("Error loading 'Colors.json'; using default palette")
-            return [[ "#ef476f", "#ffd166", "#06d6a0", "#118ab2", "#073b4c" ]]
+            NSLog("Error loading 'Colors.json'")
+            return []
         }
     }
 
@@ -56,6 +58,32 @@ class Configuration
         get
         {
             1 / (1.5 * Double(tiles))
+        }
+    }
+
+    var tiles: Int
+    {
+        set
+        {
+            defaults.set(newValue, forKey: "tiles")
+        }
+        get
+        {
+            defaults.integer(forKey: "tiles")
+        }
+    }
+
+    var palette: [String]
+    {
+        set
+        {
+            defaults.set(newValue, forKey: "palette")
+            colors = newValue.map { NSColor(webcolor: $0 as NSString) }
+            update()
+        }
+        get
+        {
+            defaults.array(forKey: "palette") as! [String]
         }
     }
 
