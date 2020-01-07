@@ -38,6 +38,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		033CEF5523C3EA1000BC74C2 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		033CEF5623C3EA4100BC74C2 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		0355EB7F23C23F9C0006DA5A /* Colors.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Colors.json; sourceTree = "<group>"; };
 		03F526B7238ADC140068DC2C /* Hexafliptile.saver */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Hexafliptile.saver; sourceTree = BUILT_PRODUCTS_DIR; };
 		03F526BE238ADC140068DC2C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -84,6 +86,8 @@
 		03F526AD238ADC140068DC2C = {
 			isa = PBXGroup;
 			children = (
+				033CEF5623C3EA4100BC74C2 /* LICENSE */,
+				033CEF5523C3EA1000BC74C2 /* README.md */,
 				03F526B9238ADC140068DC2C /* ScreenSaver */,
 				03F526EC238ADCBF0068DC2C /* Runner */,
 				03F526B8238ADC140068DC2C /* Products */,
@@ -458,7 +462,7 @@
 				DEVELOPMENT_TEAM = 28U2VZ7DF8;
 				INFOPLIST_FILE = ScreenSaver/Info.plist;
 				INSTALL_PATH = "$(HOME)/Library/Screen Savers";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.mulle-kybernetik.MaderaTriangles";
+				PRODUCT_BUNDLE_IDENTIFIER = com.doernenburg.hexafliptile;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = saver;
 			};
@@ -472,7 +476,7 @@
 				DEVELOPMENT_TEAM = 28U2VZ7DF8;
 				INFOPLIST_FILE = ScreenSaver/Info.plist;
 				INSTALL_PATH = "$(HOME)/Library/Screen Savers";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.mulle-kybernetik.MaderaTriangles";
+				PRODUCT_BUNDLE_IDENTIFIER = com.doernenburg.hexafliptile;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = saver;
 			};
@@ -492,7 +496,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.mulle-kybernetik.Runner";
+				PRODUCT_BUNDLE_IDENTIFIER = com.doernenburg.hexafliptile;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -514,7 +518,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.mulle-kybernetik.Runner";
+				PRODUCT_BUNDLE_IDENTIFIER = com.doernenburg.hexafliptile;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
