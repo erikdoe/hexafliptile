@@ -90,14 +90,14 @@ class HexafliptileView: MetalScreenSaverView
 
 
     private func updateSprites(glyphSize: Double) {
-        scene.makeSprites(glyphs: glyphs, size: glyphSize)
+        let aspectRatio = Double(glyphs[0].aspectRatio)
+        scene.makeSprites(glyphs: glyphs, glyphSize: Vector2(glyphSize, glyphSize/aspectRatio), outputSize: Vector2(Double(bounds.size.width), Double(bounds.size.height)))
     }
 
     private func updateSizeAndTextures(glyphSize: Double)
     {
         let divisor = max(bounds.size.width, bounds.size.height)
         renderer.setOutputSize(NSMakeSize(bounds.size.width / divisor, bounds.size.height / divisor))
-
         let widthInPixel = floor(bounds.width) * CGFloat(glyphSize)
         let hidpiFactor = window!.backingScaleFactor
 
@@ -127,8 +127,11 @@ class HexafliptileView: MetalScreenSaverView
     {
         statistics.viewWillStartRenderingFrame()
 
-         let sprites = scene.sprites //.sorted(by: { $0.glyphId > $1.glyphId })
-         updateQuadsForSprites(sprites)
+        renderer.beginUpdatingQuads()
+        for (idx, sprite) in scene.sprites.enumerated() {
+            renderer.updateQuad(sprite.corners, textureId: sprite.glyphId, at:idx)
+        }
+        renderer.finishUpdatingQuads()
 
          let metalLayer = layer as! CAMetalLayer
          if let drawable = metalLayer.nextDrawable() { // TODO: can this really happen?
@@ -138,21 +141,7 @@ class HexafliptileView: MetalScreenSaverView
          statistics.viewDidFinishRenderingFrame()
     }
     
-    
-    private func updateQuadsForSprites(_ sprites: [Sprite])
-    {
-        renderer.beginUpdatingQuads()
 
-        let divisor = max(bounds.size.width, bounds.size.height)
-        let offset = Vector2(Float((bounds.size.width/divisor - 1) / 2), Float((bounds.size.height/divisor - 1) / 2))
-
-        for i in 0..<sprites.count {
-            let (a, b, c, d) = sprites[i].corners
-            renderer.updateQuad((a + offset, b + offset, c + offset, d + offset), textureId: sprites[i].glyphId, at:i)
-        }
-
-        renderer.finishUpdatingQuads()
-    }
 
 }
 

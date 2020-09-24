@@ -19,7 +19,7 @@
 
 import Foundation
 
-public typealias Scalar = Float
+public typealias Scalar = Double
 
 public struct Vector2
 {
@@ -52,49 +52,49 @@ extension Vector2
 
     public static func +(lhs: Vector2, rhs: Vector2) -> Vector2
     {
-        return Vector2(lhs.x + rhs.x, lhs.y + rhs.y)
+        Vector2(lhs.x + rhs.x, lhs.y + rhs.y)
     }
 
     public static func -(lhs: Vector2, rhs: Vector2) -> Vector2
     {
-        return Vector2(lhs.x - rhs.x, lhs.y - rhs.y)
+        Vector2(lhs.x - rhs.x, lhs.y - rhs.y)
     }
 
     public static func *(lhs: Vector2, rhs: Scalar) -> Vector2
     {
-        return Vector2(lhs.x * rhs, lhs.y * rhs)
+        Vector2(lhs.x * rhs, lhs.y * rhs)
     }
 
     public static func *(lhs: Vector2, rhs: Vector2) -> Vector2
     {
-        return Vector2(lhs.x * rhs.x, lhs.y * rhs.y)
+        Vector2(lhs.x * rhs.x, lhs.y * rhs.y)
     }
 
     public static func *(lhs: Vector2, rhs: Matrix2x2) -> Vector2
     {
-        return Vector2(
+        Vector2(
             lhs.x * rhs.m11 + lhs.y * rhs.m21,
             lhs.x * rhs.m12 + lhs.y * rhs.m22)
     }
     
     public static func /(lhs: Vector2, rhs: Vector2) -> Vector2
     {
-        return Vector2(lhs.x / rhs.x, lhs.y / rhs.y)
+        Vector2(lhs.x / rhs.x, lhs.y / rhs.y)
     }
     
     public static func /(lhs: Vector2, rhs: Scalar) -> Vector2
     {
-        return Vector2(lhs.x / rhs, lhs.y / rhs)
+        Vector2(lhs.x / rhs, lhs.y / rhs)
     }
     
     public static func ==(lhs: Vector2, rhs: Vector2) -> Bool
     {
-        return (lhs.x ~= rhs.x) && (lhs.y ~= rhs.y)
+        (lhs.x ~= rhs.x) && (lhs.y ~= rhs.y)
     }
     
     public var lengthSquared: Scalar
     {
-        return x * x + y * y
+        x * x + y * y
     }
 
     public func normalized() -> Vector2
@@ -129,6 +129,13 @@ extension Matrix2x2
         let sn = sin(radians)
         self.init(cs, -sn,
                   sn,  cs)
+    }
+
+    public static func *(lhs: Matrix2x2, rhs: Vector2) -> Vector2
+    {
+        Vector2(
+                lhs.m11 * rhs.x + lhs.m12 * rhs.y,
+                lhs.m21 * rhs.x + lhs.m22 * rhs.y)
     }
 
 

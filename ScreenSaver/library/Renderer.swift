@@ -155,12 +155,12 @@ class Renderer
     func updateQuad(_ corners: (Vector2, Vector2, Vector2, Vector2), textureId: Int, at index: Int)
     {
         let (a, b, c, d) = corners
-        vertexData[ 0] = a.x; vertexData[ 1] = a.y;
-        vertexData[ 2] = b.x; vertexData[ 3] = b.y;
-        vertexData[ 4] = c.x; vertexData[ 5] = c.y;
-        vertexData[ 6] = a.x; vertexData[ 7] = a.y;
-        vertexData[ 8] = c.x; vertexData[ 9] = c.y;
-        vertexData[10] = d.x; vertexData[11] = d.y;
+        vertexData[ 0] = Float(a.x); vertexData[ 1] = Float(a.y);
+        vertexData[ 2] = Float(b.x); vertexData[ 3] = Float(b.y);
+        vertexData[ 4] = Float(c.x); vertexData[ 5] = Float(c.y);
+        vertexData[ 6] = Float(a.x); vertexData[ 7] = Float(a.y);
+        vertexData[ 8] = Float(c.x); vertexData[ 9] = Float(c.y);
+        vertexData[10] = Float(d.x); vertexData[11] = Float(d.y);
 
         let arraySize = VALUES_PER_QUAD * MemoryLayout<Float>.size
         let bufferPointer = vertexBuffer.contents() + arraySize * index

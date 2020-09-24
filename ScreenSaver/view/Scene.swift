@@ -21,30 +21,26 @@ public class Scene {
 
     var sprites: [Sprite] = []
 
-    func makeSprites(glyphs: [Glyph], size: Double) {
-        // all glyphs have the same ratio
-        let aspectRatio = Double(glyphs[0].aspectRatio)
-        self.makeHexagonTiling(glyphs: glyphs, width: size, height: size/aspectRatio)
-        NSLog("Scene contains \(sprites.count) sprites")
-    }
-
-    private func makeHexagonTiling(glyphs: [Glyph], width: Double, height: Double) {
-        let xstep = 1.5 * width
-        let ystep = sqrt(0.1875) * width
+    func makeSprites(glyphs: [Glyph], glyphSize: Vector2, outputSize: Vector2) {
+        let outputHeight = outputSize.y / outputSize.x
+        let xstep = 1.5 * glyphSize.x
+        let ystep = glyphSize.y/2
         sprites = []
-        for yi in 1..<Int(1 / ystep) {
+        for yi in 1..<Int(outputHeight / ystep) {
             let y = Double(yi) * ystep
-            let p = Util.gaussian(y * 4, mean: 4 / 2, variance: 0.11) // TODO: config?
+            NSLog("y = \(y)")
+            let p = Util.gaussian(y / outputHeight * 3, mean: 3 / 2, variance: 0.11) // TODO: config?
             for xi in 0..<Int(1 / xstep) + 2 {
                 if Util.randomDouble() < p {
                     let x = (Double(xi) + Double(yi % 2)/2) * xstep
                     let sprite = Sprite(glyphId: Util.randomInt(glyphs.count),
-                                        position: Vector2(Float(x), Float(y)),
-                                        size: NSMakeSize(CGFloat(width), CGFloat(height)))
+                                        position: Vector2(x, y),
+                                        size: Vector2(glyphSize.x, glyphSize.y))
                     sprites.append(sprite)
                 }
             }
         }
+        NSLog("Scene contains \(sprites.count) sprites")
     }
 
     func animate(t now: Double) {
@@ -54,7 +50,7 @@ public class Scene {
         // using a plain loop for performance reasons
         for i in 0..<sprites.count {
             let s = sprites[i]
-            let d = Float(flipPos) - s.pos.x + s.pos.y/2
+            let d = flipPos - s.pos.x + s.pos.y/2
             if (d > 0 && d < 0.5) {
                 s.flip(to: Util.randomInt(Configuration.sharedInstance.colors.count), at: now + pow(Util.randomDouble(), 40) / 3)
             }
