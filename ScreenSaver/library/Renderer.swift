@@ -206,7 +206,7 @@ class Renderer
 
         commandBuffer.present(drawable)
         commandBuffer.commit()
-#if true
+#if false
         // wait to get accurate statistics, can cause stutter when render time is close to 16ms
         commandBuffer.waitUntilCompleted()
 #endif

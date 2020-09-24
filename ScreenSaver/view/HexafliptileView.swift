@@ -19,7 +19,7 @@ import ScreenSaver
 
 @objc(HexafliptileView)
 class HexafliptileView: MetalScreenSaverView
-{
+{    
     var glyphs: [Glyph]!
     var scene: Scene!
 
@@ -91,13 +91,16 @@ class HexafliptileView: MetalScreenSaverView
 
     private func updateSprites(glyphSize: Double) {
         let aspectRatio = Double(glyphs[0].aspectRatio)
-        scene.makeSprites(glyphs: glyphs, glyphSize: Vector2(glyphSize, glyphSize/aspectRatio), outputSize: Vector2(Double(bounds.size.width), Double(bounds.size.height)))
+        let divisor = max(bounds.size.width, bounds.size.height)
+        scene.makeSprites(glyphs: glyphs,
+                          glyphSize: Vector2(glyphSize, glyphSize/aspectRatio),
+                          outputSize: Vector2(Double(bounds.size.width / divisor), Double(bounds.size.height / divisor)))
     }
 
     private func updateSizeAndTextures(glyphSize: Double)
     {
         let divisor = max(bounds.size.width, bounds.size.height)
-        renderer.setOutputSize(NSMakeSize(bounds.size.width / divisor, bounds.size.height / divisor))
+        renderer.setOutputSize(NSMakeSize(bounds.size.width / divisor * 2, bounds.size.height / divisor * 2))
         let widthInPixel = floor(bounds.width) * CGFloat(glyphSize)
         let hidpiFactor = window!.backingScaleFactor
 
@@ -128,8 +131,11 @@ class HexafliptileView: MetalScreenSaverView
         statistics.viewWillStartRenderingFrame()
 
         renderer.beginUpdatingQuads()
+        let divisor = max(bounds.size.width, bounds.size.height)
+        let offset = Vector2(Double(bounds.size.width / divisor / 2 ), Double(bounds.size.height / divisor / 2))
         for (idx, sprite) in scene.sprites.enumerated() {
-            renderer.updateQuad(sprite.corners, textureId: sprite.glyphId, at:idx)
+            let (a, b, c, d) = sprite.corners
+            renderer.updateQuad((a + offset, b + offset, c + offset, d + offset), textureId: sprite.glyphId, at:idx)
         }
         renderer.finishUpdatingQuads()
 

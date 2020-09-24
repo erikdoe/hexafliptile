@@ -19,30 +19,44 @@ import Cocoa
 
 public class Scene {
 
+    var grid: Double = 0
+    var nr: Int = 0
+    var nq: Int = 0
     var sprites: [Sprite] = []
-
+    
     func makeSprites(glyphs: [Glyph], glyphSize: Vector2, outputSize: Vector2) {
-        let outputHeight = outputSize.y / outputSize.x
-        let xstep = 1.5 * glyphSize.x
-        let ystep = glyphSize.y/2
-        sprites = []
-        for yi in 1..<Int(outputHeight / ystep) {
-            let y = Double(yi) * ystep
-            NSLog("y = \(y)")
-            let p = Util.gaussian(y / outputHeight * 3, mean: 3 / 2, variance: 0.11) // TODO: config?
-            for xi in 0..<Int(1 / xstep) + 2 {
-                if Util.randomDouble() < p {
-                    let x = (Double(xi) + Double(yi % 2)/2) * xstep
-                    let sprite = Sprite(glyphId: Util.randomInt(glyphs.count),
-                                        position: Vector2(x, y),
-                                        size: Vector2(glyphSize.x, glyphSize.y))
-                    sprites.append(sprite)
-                }
-            }
-        }
+        grid = glyphSize.x / 2
+        self.makeHexagonTiling(glyphs: glyphs, glyphSize: glyphSize, outputSize: outputSize)
         NSLog("Scene contains \(sprites.count) sprites")
     }
 
+    private func firstRow(_ column: Int) -> Int {
+        (column) / 2
+    }
+
+    private func hexToPixel(hex: Vector2) -> Vector2 {
+        let m = Matrix2x2(3/2, 0, sqrt(3)/2, sqrt(3))
+        return m * hex * grid
+    }
+
+    private func makeHexagonTiling(glyphs: [Glyph], glyphSize: Vector2, outputSize: Vector2) {
+        
+        // using axial coordinates; see https://www.redblobgames.com/grids/hexagons/
+        
+        nq = Int(round(outputSize.x / (0.75 * glyphSize.x))) + 1
+        nr = Int(round(outputSize.y / glyphSize.y)) + 2
+
+        sprites = []
+
+        for q in 0..<nq {
+            for r in (0-firstRow(q))..<(nr-firstRow(q)) {
+                let p = hexToPixel(hex: Vector2(Double(q), Double(r)))
+                let sprite = Sprite(glyphId: Util.randomInt(glyphs.count), position: p, size: glyphSize)
+                sprites.append(sprite)
+            }
+        }
+    }
+    
     func animate(t now: Double) {
         let speed = 2.0 // TODO: config?
         let interval = 5.0 // TODO: config?
