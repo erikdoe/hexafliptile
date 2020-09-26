@@ -19,7 +19,7 @@ import ScreenSaver
 
 @objc(HexafliptileView)
 class HexafliptileView: MetalScreenSaverView
-{    
+{
     var glyphs: [Glyph]!
     var scene: Scene!
 
@@ -41,6 +41,10 @@ class HexafliptileView: MetalScreenSaverView
     override func resize(withOldSuperviewSize oldSuperviewSize: NSSize) {
         super.resize(withOldSuperviewSize: oldSuperviewSize)
         updateSizeAndTextures(glyphSize: Configuration.sharedInstance.glyphSize)
+    }
+
+    override func draw(_ dirtyRect: NSRect) {
+        drawFrame()
     }
 
 
@@ -100,7 +104,7 @@ class HexafliptileView: MetalScreenSaverView
     private func updateSizeAndTextures(glyphSize: Double)
     {
         let divisor = max(bounds.size.width, bounds.size.height)
-        renderer.setOutputSize(NSMakeSize(bounds.size.width / divisor * 2, bounds.size.height / divisor * 2))
+        renderer.setOutputSize(NSMakeSize(bounds.size.width / divisor, bounds.size.height / divisor))
         let widthInPixel = floor(bounds.width) * CGFloat(glyphSize)
         let hidpiFactor = window!.backingScaleFactor
 
@@ -116,38 +120,26 @@ class HexafliptileView: MetalScreenSaverView
     override func animateOneFrame()
     {
         scene.animate(t: outputTime)
-        drawFrame()
-//        DispatchQueue.main.async() {
-//            self.needsDisplay = true
-//        }
+        self.drawFrame()
     }
     
-    override func draw(_ dirtyRect: NSRect) {
-        drawFrame()
-    }
-
     private func drawFrame()
     {
         statistics.viewWillStartRenderingFrame()
 
         renderer.beginUpdatingQuads()
-        let divisor = max(bounds.size.width, bounds.size.height)
-        let offset = Vector2(Double(bounds.size.width / divisor / 2 ), Double(bounds.size.height / divisor / 2))
         for (idx, sprite) in scene.sprites.enumerated() {
-            let (a, b, c, d) = sprite.corners
-            renderer.updateQuad((a + offset, b + offset, c + offset, d + offset), textureId: sprite.glyphId, at:idx)
+            if sprite.didChange {
+                renderer.updateQuad(sprite.corners, textureId: sprite.glyphId, at:idx)
+            }
         }
         renderer.finishUpdatingQuads()
 
-         let metalLayer = layer as! CAMetalLayer
          if let drawable = metalLayer.nextDrawable() { // TODO: can this really happen?
              renderer.renderFrame(drawable: drawable)
          }
 
-         statistics.viewDidFinishRenderingFrame()
+        statistics.viewDidFinishRenderingFrame()
     }
     
-
-
 }
-

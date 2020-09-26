@@ -16,10 +16,12 @@
 
 import ScreenSaver
 import Metal
+import IOKit.ps
 
 class MetalScreenSaverView : ScreenSaverView
 {
     var device: MTLDevice!
+    var metalLayer: CAMetalLayer!
     var displayLink: CVDisplayLink!
 
     var outputTime: Double = 0
@@ -30,7 +32,7 @@ class MetalScreenSaverView : ScreenSaverView
     override init?(frame: NSRect, isPreview: Bool)
     {
         super.init(frame: frame, isPreview: isPreview)
-        device = selectMetalDevice(preferLowPower: true) // TODO: make low power preference a user default?
+        device = selectMetalDevice()
         wantsLayer = true;
     }
 
@@ -44,26 +46,30 @@ class MetalScreenSaverView : ScreenSaverView
         CVDisplayLinkStop(displayLink!)
     }
 
-    private func selectMetalDevice(preferLowPower: Bool) -> MTLDevice
+    private func selectMetalDevice() -> MTLDevice
     {
         var device: MTLDevice?
-        if !preferLowPower {
-            device = MTLCreateSystemDefaultDevice()!
+        var message: String
+        
+        if IOPSGetTimeRemainingEstimate() == kIOPSTimeRemainingUnlimited {
+            device = MTLCreateSystemDefaultDevice()
+            message = "Connected to power, using default video device"
         } else {
             for d in MTLCopyAllDevices() {
                 device = d
-                NSLog("Considering device '\(d.name)'")
                 if d.isLowPower && !d.isHeadless {
+                    message = "On battery, using low power video device"
                     break
                 }
             }
+            message = "On battery, using video device"
         }
         if let name = device?.name {
-            NSLog("Using device '\(name)'")
+            NSLog("MetalScreenSaverView: \(message) \(name)")
         } else {
-            NSLog("No or unknown device")
+            NSLog("MetalScreenSaverView: No or unknown video device. Screen saver might not work.")
         }
-        return device! // TODO: can we assume there will always be a device?
+        return device!
     }
 
 
@@ -73,7 +79,8 @@ class MetalScreenSaverView : ScreenSaverView
     {
         super.viewDidMoveToSuperview()
         if let window = superview?.window {
-            layer = makeMetalLayer(window: window, device:device)
+            metalLayer = makeMetalLayer(window: window, device:device)
+            layer = metalLayer
             displayLink = makeDisplayLink(window: window)
         }
     }
