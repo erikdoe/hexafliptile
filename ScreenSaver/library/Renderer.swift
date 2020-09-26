@@ -30,12 +30,11 @@ class Renderer
 
     private var textures: [MTLTexture?]
 
-    private let VALUES_PER_QUAD = 12
-    private var vertexData: [Float]
-
     private var vertexBuffer: MTLBuffer!
     private var uniformsBuffer: MTLBuffer!
     private var textureCoordBuffer: MTLBuffer!
+
+    private let VALUES_PER_QUAD = 12
 
     
     init(device: MTLDevice, numTextures: Int, numQuads: Int)
@@ -44,7 +43,6 @@ class Renderer
         self.numQuads = numQuads
 
         self.textureIds = [Int](repeating:0, count:numQuads)
-        self.vertexData = [Float](repeating: 0, count: VALUES_PER_QUAD)
         self.textures = [MTLTexture?](repeating: nil, count: numTextures)
 
         self.pipelineState = makePipelineState()
@@ -154,14 +152,8 @@ class Renderer
 
     func updateQuad(_ corners: (Vector2, Vector2, Vector2, Vector2), textureId: Int, at index: Int)
     {
-        let (a, b, c, d) = corners
-        vertexData[ 0] = Float(a.x); vertexData[ 1] = Float(a.y);
-        vertexData[ 2] = Float(b.x); vertexData[ 3] = Float(b.y);
-        vertexData[ 4] = Float(c.x); vertexData[ 5] = Float(c.y);
-        vertexData[ 6] = Float(a.x); vertexData[ 7] = Float(a.y);
-        vertexData[ 8] = Float(c.x); vertexData[ 9] = Float(c.y);
-        vertexData[10] = Float(d.x); vertexData[11] = Float(d.y);
-
+        // based on the assumption that Vector2 is layed out as two consecutive floats
+        let vertexData: [Vector2] = [ corners.0, corners.1, corners.2, corners.0, corners.2, corners.3 ]
         let arraySize = VALUES_PER_QUAD * MemoryLayout<Float>.size
         let bufferPointer = vertexBuffer.contents() + arraySize * index
         memcpy(bufferPointer, vertexData, arraySize)

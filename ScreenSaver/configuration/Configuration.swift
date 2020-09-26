@@ -53,11 +53,11 @@ class Configuration
         }
     }
 
-    var glyphSize: Double
+    var glyphSize: Float
     {
         get
         {
-            1 / (1.5 * Double(tiles))
+            1 / (1.5 * Float(tiles))
         }
     }
 

@@ -19,10 +19,14 @@ import Cocoa
 
 public class Scene {
 
-    var grid: Double = 0
+    var grid: Float = 0
     var nr: Int = 0
     var nq: Int = 0
     var sprites: [Sprite] = []
+    var sindex: [[Int]] = [[]]
+
+    var dir: Vector2 = Vector2(1, 0)
+    var pos: Vector2 = Vector2(0, 3)
     
     func makeSprites(glyphs: [Glyph], glyphSize: Vector2, outputSize: Vector2) {
         grid = glyphSize.x / 2
@@ -42,34 +46,78 @@ public class Scene {
     private func makeHexagonTiling(glyphs: [Glyph], glyphSize: Vector2, outputSize: Vector2) {
         
         // using axial coordinates; see https://www.redblobgames.com/grids/hexagons/
-        
+
         nq = Int(round(outputSize.x / (0.75 * glyphSize.x))) + 1
         nr = Int(round(outputSize.y / glyphSize.y)) + 2
+        sindex = Array(repeating: Array(repeating: -1, count: nr*2+1), count:nq+1)
 
         sprites = []
 
         for q in 0..<nq {
             for r in (0-firstRow(q))..<(nr-firstRow(q)) {
-                let p = hexToPixel(hex: Vector2(Double(q), Double(r)))
+                let p = hexToPixel(hex: Vector2(Float(q), Float(r)))
                 let sprite = Sprite(glyphId: Util.randomInt(glyphs.count), position: p, size: glyphSize)
+                sindex[q][r+nr+1] = sprites.count
                 sprites.append(sprite)
             }
         }
     }
     
+//    func animate_new(t now: Double) {
+//
+//        if (pos.x >= 0) && (Int(pos.x) < nq+1) && (pos.y >= 0) && (Int(pos.y) <  nr*2+1) {
+//            let idx = sindex[Int(pos.x)][Int(pos.y) + nr]
+//            if (idx > -1) {
+//                sprites[idx].flip(to: Util.randomInt(Configuration.sharedInstance.colors.count), at: now)
+//                pos = pos + dir
+//
+//                for s in sprites {
+//                    s.animate(t: now)
+//                }
+//
+//                return
+//
+//            }
+//        }
+//
+//
+//            let r = Util.randomInt(4);
+//             if (r % 2 == 0) {
+//                pos = Vector2(0, Util.randomDouble(nr))
+//                if (r / 2 == 0) {
+//                     dir = Vector2(1, 0)
+//                 } else {
+//                     dir = Vector2(1, -1)
+//                 }
+//             } else {
+//                pos = Vector2(Double(nq-1), Util.randomDouble(nr) - Double(firstRow(nq)))
+//                if (r / 2 == 0) {
+//                     dir = Vector2(-1, 0)
+//                 } else {
+//                     dir = Vector2(-1, 1)
+//                 }
+//            }
+//
+//
+//    }
+
+    
     func animate(t now: Double) {
         let speed = 2.0 // TODO: config?
         let interval = 5.0 // TODO: config?
-        let flipPos = speed * (now.remainder(dividingBy:interval) + interval/2)
+        let flipPos = Float(speed * (now.remainder(dividingBy:interval) + interval/2))
         // using a plain loop for performance reasons
-        for i in 0..<sprites.count {
-            let s = sprites[i]
+        let num = sprites.count
+        var idx = 0
+        while (idx < num) {
+            let s = sprites[idx]
             let d = flipPos - s.pos.x + s.pos.y/2
             if (d > 0 && d < 0.5) {
-                s.flip(to: Util.randomInt(Configuration.sharedInstance.colors.count), at: now + pow(Util.randomDouble(), 40) / 3)
+                s.flip(to: Util.randomInt(Configuration.sharedInstance.colors.count), at: now)
             }
             s.animate(t: now)
+            idx += 1
         }
     }
-
+    
 }

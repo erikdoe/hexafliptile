@@ -18,6 +18,7 @@ import Cocoa
 
 enum FlipState: Int {
     case
+         new,
          waiting,
          flipping,
          wobbling,
@@ -34,11 +35,13 @@ class Sprite
     var pos: Vector2
     var corners: (Vector2, Vector2, Vector2, Vector2)
 
-    private var stretchFactor: Double
+    private var stretchFactor: Float
 
     private var flipState: FlipState
     private var flipStart: Double
     private var newGlyphId: Int
+    
+    public var didChange: Bool
     
     init(glyphId: Int, position: Vector2, size: Vector2)
     {
@@ -51,30 +54,35 @@ class Sprite
         self.corners = (Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0))
         self.stretchFactor = 0.5
 
-        self.flipState = .finished
+        self.flipState = .new
         self.flipStart = 0
         self.newGlyphId = 0
+        
+        self.didChange = false
 
         updateCorners()
     }
     
     func flip(to glyphId: Int, at start: Double) {
-//        if flipState == .finished {
-            newGlyphId = glyphId
-            flipStart = start
-            flipState = .waiting
-//        }
+        newGlyphId = glyphId
+        flipStart = start
+        flipState = .waiting
     }
 
     func animate(t now: Double) {
-
+        
+        didChange = false
+        
         switch flipState {
+        case .new:
+            didChange = true
+            flipState = .finished
         case .waiting:
             if now > flipStart {
                 flipState = .flipping
             }
         case .flipping:
-            let d = (now - flipStart) * flipSpeed
+            let d = Float((now - flipStart) * flipSpeed)
             if d < 1 {
                 let oldFactor = stretchFactor
                 stretchFactor = d - 0.5
@@ -83,13 +91,15 @@ class Sprite
                 }
                 updateCorners()
             } else {
-                flipState = .wobbling
+                stretchFactor = 0.5
+                flipState = .finished
+                updateCorners()
             }
         case .wobbling:
             // d = 0 for a value of now that makes d = 1 in .flipping
-            let d = (now - flipStart - 1/flipSpeed) * (flipSpeed/2)
+            let d = Float((now - flipStart - 1/flipSpeed) * (flipSpeed/2))
             stretchFactor = 0.5 - abs( 0.05 * exp(-d) * sin(5*d) )
-            if d > Double.pi {
+            if d > Float.pi {
                 flipState = .finished
                 stretchFactor = 0.5
             }
@@ -101,6 +111,9 @@ class Sprite
     }
 
     private func updateCorners() {
+        
+        didChange = true
+        
         let s = size * Vector2(stretchFactor, 0.5)
         corners = (
             pos + s * Vector2(+1, +1),

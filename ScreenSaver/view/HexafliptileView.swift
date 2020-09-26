@@ -93,15 +93,15 @@ class HexafliptileView: MetalScreenSaverView
     }
 
 
-    private func updateSprites(glyphSize: Double) {
-        let aspectRatio = Double(glyphs[0].aspectRatio)
+    private func updateSprites(glyphSize: Float) {
+        let aspectRatio = Float(glyphs[0].aspectRatio)
         let divisor = max(bounds.size.width, bounds.size.height)
         scene.makeSprites(glyphs: glyphs,
                           glyphSize: Vector2(glyphSize, glyphSize/aspectRatio),
-                          outputSize: Vector2(Double(bounds.size.width / divisor), Double(bounds.size.height / divisor)))
+                          outputSize: Vector2(Float(bounds.size.width / divisor), Float(bounds.size.height / divisor)))
     }
 
-    private func updateSizeAndTextures(glyphSize: Double)
+    private func updateSizeAndTextures(glyphSize: Float)
     {
         let divisor = max(bounds.size.width, bounds.size.height)
         renderer.setOutputSize(NSMakeSize(bounds.size.width / divisor, bounds.size.height / divisor))
@@ -128,10 +128,15 @@ class HexafliptileView: MetalScreenSaverView
         statistics.viewWillStartRenderingFrame()
 
         renderer.beginUpdatingQuads()
-        for (idx, sprite) in scene.sprites.enumerated() {
+        let sprites = scene.sprites
+        let num = sprites.count
+        var idx = 0
+        while (idx < num) {
+            let sprite = sprites[idx]
             if sprite.didChange {
                 renderer.updateQuad(sprite.corners, textureId: sprite.glyphId, at:idx)
             }
+            idx += 1
         }
         renderer.finishUpdatingQuads()
 

@@ -19,7 +19,7 @@
 
 import Foundation
 
-public typealias Scalar = Double
+public typealias Scalar = Float
 
 public struct Vector2
 {

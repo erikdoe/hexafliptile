@@ -65,16 +65,16 @@ class Glyph
         NSGraphicsContext.saveGraphicsState()
         NSGraphicsContext.current = NSGraphicsContext(bitmapImageRep: imageRep)
 
-        let shrinkFactor: CGFloat = 0.18 // TODO: config?
+        let shrinkFactor: CGFloat = 0.05 // TODO: config?
         let scaledPath = path.copy() as! NSBezierPath
         scaledPath.transform(using: AffineTransform(scaleByX: size * (1 - shrinkFactor), byY: size * (1 - shrinkFactor)))
         scaledPath.transform(using: AffineTransform(translationByX: size * shrinkFactor/2, byY: size * shrinkFactor/2))
 
         color.set()
         scaledPath.fill()
-        color.lighter(0.15).set()
-        scaledPath.lineWidth = size * shrinkFactor/2
-        scaledPath.stroke()
+//        color.lighter(0.15).set()
+//        scaledPath.lineWidth = size * shrinkFactor/2
+//        scaledPath.stroke()
 
         NSGraphicsContext.restoreGraphicsState()
         
