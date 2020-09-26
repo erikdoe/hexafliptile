@@ -166,6 +166,10 @@ class Renderer
         let bufferPointer = vertexBuffer.contents() + arraySize * index
         memcpy(bufferPointer, vertexData, arraySize)
         textureIds[index] = textureId
+        
+//        let start = index * VALUES_PER_QUAD * MemoryLayout<Float>.size
+//        let end = start + VALUES_PER_QUAD * MemoryLayout<Float>.size
+//        vertexBuffer.didModifyRange(start..<end)
     }
 
     func finishUpdatingQuads()
@@ -191,16 +195,7 @@ class Renderer
         encoder.setVertexBuffer(textureCoordBuffer, offset: 0, index: 1)
         encoder.setVertexBuffer(uniformsBuffer, offset: 0, index: 2)
 
-        var i = 0
-        while i < numQuads {
-            encoder.setFragmentTexture(textures[textureIds[i]], index: 0)
-            // when the quads' textureIds are collated, we can minimise draw calls
-            let s = i
-            while (i < numQuads) && (textureIds[i] == textureIds[s]) {
-                i += 1
-            }
-            encoder.drawPrimitives(type: .triangle, vertexStart: s * 6, vertexCount: (i - s) * 6, instanceCount: 1)
-        }
+        setTextures(encoder)
 
         encoder.endEncoding()
 
@@ -210,6 +205,21 @@ class Renderer
         // wait to get accurate statistics, can cause stutter when render time is close to 16ms
         commandBuffer.waitUntilCompleted()
 #endif
+    }
+    
+     
+    func setTextures(_ encoder: MTLRenderCommandEncoder) {
+        var i = 0
+        let n = numQuads
+        while i < n {
+            encoder.setFragmentTexture(textures[textureIds[i]], index: 0)
+            // when the quads' textureIds are collated, we can minimise draw calls
+            let s = i
+            while (i < n) && (textureIds[i] == textureIds[s]) {
+                i += 1
+            }
+            encoder.drawPrimitives(type: .triangle, vertexStart: s * 6, vertexCount: (i - s) * 6, instanceCount: 1)
+        }
     }
 
 
