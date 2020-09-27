@@ -18,11 +18,9 @@ import Cocoa
 
 enum FlipState: Int {
     case
-         new,
          waiting,
          flipping,
-         wobbling,
-         finished
+         wobbling
 }
 
 
@@ -54,7 +52,7 @@ class Sprite
         self.corners = (Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0))
         self.stretchFactor = 0.5
 
-        self.flipState = .new
+        self.flipState = .flipping
         self.flipStart = 0
         self.newGlyphId = 0
         
@@ -66,22 +64,14 @@ class Sprite
     func flip(to glyphId: Int, at start: Double) {
         newGlyphId = glyphId
         flipStart = start
-        flipState = .waiting
+        flipState = .flipping
     }
 
     func animate(t now: Double) {
         
-        didChange = false
-        
         switch flipState {
-        case .new:
-            didChange = true
-            flipState = .finished
-        case .waiting:
-            if now > flipStart {
-                flipState = .flipping
-            }
         case .flipping:
+            didChange = true
             let d = Float((now - flipStart) * flipSpeed)
             if d < 1 {
                 let oldFactor = stretchFactor
@@ -92,19 +82,21 @@ class Sprite
                 updateCorners()
             } else {
                 stretchFactor = 0.5
-                flipState = .finished
+                flipState = .wobbling // TODO: skip wobbling below a certain size
                 updateCorners()
             }
         case .wobbling:
+            didChange = true
             // d = 0 for a value of now that makes d = 1 in .flipping
             let d = Float((now - flipStart - 1/flipSpeed) * (flipSpeed/2))
             stretchFactor = 0.5 - abs( 0.05 * exp(-d) * sin(5*d) )
             if d > Float.pi {
-                flipState = .finished
+                flipState = .waiting
                 stretchFactor = 0.5
             }
             updateCorners()
-        case .finished:
+        case .waiting:
+            didChange = false
             break
         }
         
@@ -112,7 +104,6 @@ class Sprite
 
     private func updateCorners() {
         
-        didChange = true
         
         let s = size * Vector2(stretchFactor, 0.5)
         corners = (
